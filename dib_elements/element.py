@@ -16,6 +16,7 @@
 
 import logging
 import os
+import string
 
 
 class Element(object):
@@ -43,6 +44,8 @@ class Element(object):
             logging.debug('  found hook: %s' % hook)
 
             for script in os.listdir(hook_path):
+                if script[0:1] not in string.digits:
+                    continue
                 logging.debug('    found script: %s' % script)
                 self.hooks.setdefault(
                     hook, []).append(os.path.join(hook_path, script))
