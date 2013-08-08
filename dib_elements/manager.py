@@ -27,10 +27,22 @@ from diskimage_builder.elements import expand_dependencies
 class ElementManager(object):
 
     def __init__(self, elements, hooks, element_paths=None, dry_run=False):
+        """
+        :param elements: Element names to apply.
+        :type elements: list.
+        :param hooks: Hooks to run for each element.
+        :type hooks: list.
+        :param element_paths: File system paths to search for elements.
+        :type element_paths: list of strings.
+        :param dry_run: If True, do not actually run the hooks.
+        :type dry_run: bool
+        """
         self.elements = elements
         self.dry_run = dry_run
         self.hooks = hooks
+        self.loaded_elements = {}
 
+        # the environment variable should override anything passed in
         if os.environ.has_key('ELEMENTS_PATH'):
             self.element_paths = os.environ['ELEMENTS_PATH'].split(':')
         else:
@@ -42,7 +54,6 @@ class ElementManager(object):
         logging.debug('manager initialized with elements path: %s' %
                       self.element_paths)
 
-        self.loaded_elements = {}
         self.load_elements()
         self.load_dependencies()
         self.copy_elements()
@@ -52,17 +63,28 @@ class ElementManager(object):
             self.run_hook(hook)
 
     def load_elements(self):
+        """Load all elements from self.element_paths.
+
+        This populates self.loaded_elements.
+        """
         for path in self.element_paths:
             self.process_path(path)
 
     def copy_elements(self):
+        """Copy elements to apply to a temporary directory."""
         self.tmp_hook_dir = tempfile.mkdtemp()
         for element in self.elements:
             element_dir = self.loaded_elements[element].directory
             dir_util.copy_tree(element_dir, self.tmp_hook_dir)
+        # elements expect this environment variable to be set
         os.environ['TMP_HOOKS_PATH'] = self.tmp_hook_dir
 
     def process_path(self, path):
+        """Load elements from a given filesystem path.
+
+        :param path: Filesystem path from which to load elements.
+        :type path: str.
+        """
         if not os.access(path, os.R_OK):
             raise Exception
 

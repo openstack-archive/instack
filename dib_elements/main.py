@@ -43,6 +43,8 @@ def load_args():
 
 
 def set_environment():
+    """Set environment variables that diskimage-builder elements expect."""
+
     os.environ['TMP_MOUNT_PATH'] = '/'
     os.environ['DIB_OFFLINE'] = ''
     if platform.processor() == 'x86_64':

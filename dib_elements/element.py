@@ -20,8 +20,13 @@ import string
 
 
 class Element(object):
+    """A diskimage-builder element."""
 
     def __init__(self, directory):
+        """
+        :param directory: The directory that defines the element.
+        :type directory str.
+        """
         logging.debug('initializing element: %s' % directory)
 
         if not os.access(directory, os.R_OK):
