@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# cat various log files so we can test that output is getting spooled to the
+# screen.
+sudo cat /var/log/messages
+sleep 1
+sudo cat /var/log/secure
+sleep 1
+sudo cat /var/log/yum.log
