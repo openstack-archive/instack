@@ -30,6 +30,10 @@ def load_args():
         '-p', '--element-path', nargs='*',
         help=("element path(s) to search for elements (ELEMENTS_PATH "
               "environment variable will take precedence if defined)"))
+    parser.add_argument(
+        '-d', '--dry-run', action='store_true',
+        help=("Dry run only, don't actually modify system, prints out "
+              "what would have been run."))
     return parser.parse_args()
 
 
@@ -37,7 +41,7 @@ def main():
     args = load_args()
     logging.basicConfig(level=logging.DEBUG, 
                         format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
-    em = manager.ElementManager(args.element, args.element_path)
+    em = manager.ElementManager(args.element, args.element_path, args.dry_run)
     em.run_hook('install')
 
 
