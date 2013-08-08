@@ -106,6 +106,8 @@ class ElementManager(object):
     def run_hook(self, hook):
         """Run a hook on the current system.
 
+        TODO: update this to use dib-run-parts
+
         :param hook: name of hook to run
         :type hook: str
         """
