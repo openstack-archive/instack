@@ -60,6 +60,7 @@ class ElementManager(object):
         self.copy_elements()
 
     def run(self):
+        """Apply the elements by running each specified hook."""
         for hook in self.hooks:
             self.run_hook(hook)
 
@@ -97,11 +98,17 @@ class ElementManager(object):
             self.loaded_elements[element] = Element(os.path.join(path, element))
 
     def load_dependencies(self):
+        """Load and add all element dependencies to self.elements."""
         all_elements = expand_dependencies(
             self.elements, ':'.join(self.element_paths))
         self.elements = all_elements
 
     def run_hook(self, hook):
+        """Run a hook on the current system.
+
+        :param hook: name of hook to run
+        :type hook: str
+        """
         hook_dir = os.path.join(self.tmp_hook_dir, '%s.d' % hook)
         scripts = os.listdir(hook_dir)
         scripts = [s for s in scripts if s.startswith(tuple(string.digits))]
@@ -110,6 +117,8 @@ class ElementManager(object):
 
         for script in scripts:
             if not self.dry_run:
+                # environment must be preseverd so that the variables set
+                # earlier in os.environ are available in the scripts.
                 call(['sudo', '-E', '/bin/bash', script])
             else:
                 logging.info("script to execute: %s" % script)
