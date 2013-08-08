@@ -24,12 +24,15 @@ def load_args():
     parser = argparse.ArgumentParser(
         description="Execute diskimage-builder elements on the current system.")
     parser.add_argument(
-        '-e', '--element', nargs='*',
+        '-e', '--element', nargs='+',
         help="element(s) to execute")
     parser.add_argument(
-        '-p', '--element-path', nargs='*',
+        '-p', '--element-path', nargs='+',
         help=("element path(s) to search for elements (ELEMENTS_PATH "
               "environment variable will take precedence if defined)"))
+    parser.add_argument(
+        '-k', '--hook', nargs='+', required=True,
+        help=("hook(s) to execute for each element"))
     parser.add_argument(
         '-d', '--dry-run', action='store_true',
         help=("Dry run only, don't actually modify system, prints out "
@@ -41,8 +44,8 @@ def main():
     args = load_args()
     logging.basicConfig(level=logging.DEBUG, 
                         format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
-    em = manager.ElementManager(args.element, args.element_path, args.dry_run)
-    em.run_hook('install')
+    em = manager.ElementManager(args.element, args.hook, args.element_path, args.dry_run)
+    em.run()
 
 
 if __name__ == '__main__':

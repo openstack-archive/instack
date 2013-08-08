@@ -24,9 +24,10 @@ from diskimage_builder.elements import expand_dependencies
 
 class ElementManager(object):
 
-    def __init__(self, elements, element_paths=None, dry_run=False):
+    def __init__(self, elements, hooks, element_paths=None, dry_run=False):
         self.elements = elements
         self.dry_run = dry_run
+        self.hooks = hooks
 
         if os.environ.has_key('ELEMENTS_PATH'):
             self.element_paths = os.environ['ELEMENTS_PATH'].split(':')
@@ -42,6 +43,10 @@ class ElementManager(object):
         self.loaded_elements = {}
         self.load_elements()
         self.load_dependencies()
+
+    def run(self):
+        for hook in self.hooks:
+            self.run_hook(hook)
 
     def load_elements(self):
         for path in self.element_paths:
