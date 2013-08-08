@@ -45,7 +45,10 @@ def load_args():
 def set_environment():
     os.environ['TMP_MOUNT_PATH'] = '/'
     os.environ['DIB_OFFLINE'] = ''
-    os.environ['ARCH'] = platform.processor()
+    if platform.processor() == 'x86_64':
+        os.environ['ARCH'] = 'amd64'
+    else:
+        os.environ['ARCH'] = 'i386'
 
 
 def main():
