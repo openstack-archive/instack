@@ -14,8 +14,10 @@
 # under the License.
 
 
+from distutils import dir_util
 import logging
 import os
+import tempfile
 
 from dib_elements.element import Element
 from dib_elements.util import call
@@ -51,6 +53,11 @@ class ElementManager(object):
     def load_elements(self):
         for path in self.element_paths:
             self.process_path(path)
+        self.tmp_hook_dir = tempfile.mkdtemp()
+        for element in self.elements:
+            element_dir = self.loaded_elements[element].directory
+            dir_util.copy_tree(element_dir, self.tmp_hook_dir)
+        os.environ['TMP_HOOKS_PATH'] = self.tmp_hook_dir
 
     def process_path(self, path):
         if not os.access(path, os.R_OK):
@@ -78,6 +85,6 @@ class ElementManager(object):
 
         for script in scripts:
             if not self.dry_run:
-                call(['sudo', '-i', '/bin/bash', script])
+                call(['sudo', '-E', '/bin/bash', script])
             else:
                 logging.info("script to execute: %s" % script)

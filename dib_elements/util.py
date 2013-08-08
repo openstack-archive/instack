@@ -15,14 +15,19 @@
 
 
 import logging
+import os
 import subprocess
 import sys
 
 def call(*args, **kwargs):
 
     logging.debug('executing command: %s' % args)
-    p = subprocess.Popen(*args, stdout=sys.stdout,
-                         stderr=sys.stderr, **kwargs)
+    p = subprocess.Popen(*args, 
+                         stdout=sys.stdout,
+                         stderr=sys.stderr, 
+                         env=os.environ,
+                         **kwargs)
+
     rc = p.wait()
     logging.debug('  exited with code: %s' % rc)
     return

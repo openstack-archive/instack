@@ -16,6 +16,7 @@
 
 import argparse
 import logging
+import os
 
 from dib_elements import manager
 
@@ -40,8 +41,14 @@ def load_args():
     return parser.parse_args()
 
 
+def set_environment():
+    os.environ['TMP_MOUNT_PATH'] = '/'
+    os.environ['DIB_OFFLINE'] = ''
+
+
 def main():
     args = load_args()
+    set_environment()
     logging.basicConfig(level=logging.DEBUG, 
                         format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
     em = manager.ElementManager(args.element, args.hook, args.element_path, args.dry_run)
