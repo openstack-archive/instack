@@ -17,6 +17,7 @@
 from distutils import dir_util
 import logging
 import os
+import string
 import tempfile
 
 from dib_elements.element import Element
@@ -101,12 +102,11 @@ class ElementManager(object):
         self.elements = all_elements
 
     def run_hook(self, hook):
-        scripts = []
-        for element in self.loaded_elements:
-            if element in self.elements:
-                scripts += self.loaded_elements[element].get_hook(hook) 
-
+        hook_dir = os.path.join(self.tmp_hook_dir, '%s.d' % hook)
+        scripts = os.listdir(hook_dir)
+        scripts = [s for s in scripts if s.startswith(tuple(string.digits))]
         scripts = sorted(scripts, key=lambda script: os.path.basename(script))
+        scripts = [os.path.abspath(os.path.join(hook_dir, s)) for s in scripts]
 
         for script in scripts:
             if not self.dry_run:
