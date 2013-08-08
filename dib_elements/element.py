@@ -38,7 +38,7 @@ class Element(object):
                 continue
 
             hook = f[:-2]
-            hook_path = os.path.join(self.directory, f)
+            hook_path = os.path.abspath(os.path.join(self.directory, f))
 
             logging.debug('  found hook: %s' % hook)
 
