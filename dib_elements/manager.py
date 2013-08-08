@@ -45,6 +45,7 @@ class ElementManager(object):
         self.loaded_elements = {}
         self.load_elements()
         self.load_dependencies()
+        self.copy_elements()
 
     def run(self):
         for hook in self.hooks:
@@ -53,6 +54,8 @@ class ElementManager(object):
     def load_elements(self):
         for path in self.element_paths:
             self.process_path(path)
+
+    def copy_elements(self):
         self.tmp_hook_dir = tempfile.mkdtemp()
         for element in self.elements:
             element_dir = self.loaded_elements[element].directory
