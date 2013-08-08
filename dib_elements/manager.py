@@ -58,6 +58,7 @@ class ElementManager(object):
             self.loaded_elements[element] = Element(os.path.join(path, element))
 
     def load_dependencies(self):
+        import epdb; epdb.st()  
         all_elements = expand_dependencies(
             self.loaded_elements.keys(), ':'.join(self.element_paths))
         self.elements = all_elements
