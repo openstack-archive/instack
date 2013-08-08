@@ -17,6 +17,7 @@
 import argparse
 import logging
 import os
+import platform
 
 from dib_elements import manager
 
@@ -44,6 +45,7 @@ def load_args():
 def set_environment():
     os.environ['TMP_MOUNT_PATH'] = '/'
     os.environ['DIB_OFFLINE'] = ''
+    os.environ['ARCH'] = platform.processor()
 
 
 def main():
