@@ -130,7 +130,9 @@ class ElementManager(object):
                 if rc != 0:
                     logging.error("scripted failed: %s" % script)
                     if self.interactive:
-                        entry = raw_input("Continue? (y/n): ")
+                        logging.error("Continue? (y/n): ")
+                        sys.stdout.flush()
+                        entry = raw_input("")
                         if entry.lower() == 'y':
                             logging.info("continuing on user command.")
                             continue
