@@ -39,6 +39,9 @@ def load_args():
         '-d', '--debug', action='store_true',
         help=("Debugging output"))
     parser.add_argument(
+        '-i', '--interactive', action='store_true',
+        help=("If set, prompt to continue running after a failed script."))
+    parser.add_argument(
         '--dry-run', action='store_true',
         help=("Dry run only, don't actually modify system, prints out "
               "what would have been run."))
@@ -59,10 +62,14 @@ def set_environment():
 def main():
     args = load_args()
     set_environment()
-    logging.basicConfig(level=logging.DEBUG, 
-                        format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG, 
+                            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
+    else:
+        logging.basicConfig(level=logging.INFO, 
+                            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
     em = manager.ElementManager(args.element, args.hook, args.element_path,
-                                args.dry_run, args.debug)
+                                args.dry_run, args.interactive)
     em.run()
 
 

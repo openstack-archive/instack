@@ -18,6 +18,7 @@ from distutils import dir_util
 import logging
 import os
 import string
+import sys
 import tempfile
 
 from dib_elements.element import Element
@@ -27,7 +28,8 @@ from diskimage_builder.elements import expand_dependencies
 
 class ElementManager(object):
 
-    def __init__(self, elements, hooks, element_paths=None, dry_run=False):
+    def __init__(self, elements, hooks, element_paths=None, dry_run=False,
+                 interactive=False):
         """
         :param elements: Element names to apply.
         :type elements: list.
@@ -41,6 +43,7 @@ class ElementManager(object):
         self.elements = elements
         self.dry_run = dry_run
         self.hooks = hooks
+        self.interactive = interactive
         self.loaded_elements = {}
 
         # the environment variable should override anything passed in
@@ -126,5 +129,12 @@ class ElementManager(object):
                 rc = call(['sudo', '-E', '/bin/bash', script])
                 if rc != 0:
                     logging.error("scripted failed: %s" % script)
+                    if self.interactive:
+                        entry = raw_input("Continue? (y/n): ")
+                        if entry.lower() == 'y':
+                            logging.info("continuing on user command.")
+                            continue
+                    logging.error("exiting after failure.")
+                    sys.exit(1)
             else:
                 logging.info("script to execute: %s" % script)
