@@ -32,3 +32,4 @@ def call(*args, **kwargs):
 
     rc = p.wait()
     logging.debug('  exited with code: %s' % rc)
+    return rc
