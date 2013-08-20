@@ -52,7 +52,7 @@ class ElementManager(object):
         if self.element_paths is None:        
             raise Exception
 
-        logging.debug('manager initialized with elements path: %s' %
+        logging.info('manager initialized with elements path: %s' %
                       self.element_paths)
 
         self.load_elements()
@@ -62,6 +62,7 @@ class ElementManager(object):
     def run(self):
         """Apply the elements by running each specified hook."""
         for hook in self.hooks:
+            logging.info("running hook: %s" % hook)
             self.run_hook(hook)
 
     def load_elements(self):
@@ -118,6 +119,7 @@ class ElementManager(object):
         scripts = [os.path.abspath(os.path.join(hook_dir, s)) for s in scripts]
 
         for script in scripts:
+            logging.info("running script: %s" % script)
             if not self.dry_run:
                 # environment must be preseverd so that the variables set
                 # earlier in os.environ are available in the scripts.

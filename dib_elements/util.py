@@ -22,7 +22,7 @@ import sys
 def call(*args, **kwargs):
     """Call out to run a command via subprocess."""
 
-    logging.debug('executing command: %s' % args)
+    logging.info('executing command: %s' % args)
     # all output to stdout/stderr for now.
     p = subprocess.Popen(*args, 
                          stdout=sys.stdout,
@@ -31,5 +31,5 @@ def call(*args, **kwargs):
                          **kwargs)
 
     rc = p.wait()
-    logging.debug('  exited with code: %s' % rc)
+    logging.info('  exited with code: %s' % rc)
     return rc

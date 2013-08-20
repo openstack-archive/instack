@@ -36,7 +36,10 @@ def load_args():
         '-k', '--hook', nargs='+', required=True,
         help=("hook(s) to execute for each element"))
     parser.add_argument(
-        '-d', '--dry-run', action='store_true',
+        '-d', '--debug', action='store_true',
+        help=("Debugging output"))
+    parser.add_argument(
+        '--dry-run', action='store_true',
         help=("Dry run only, don't actually modify system, prints out "
               "what would have been run."))
     return parser.parse_args()
@@ -58,7 +61,8 @@ def main():
     set_environment()
     logging.basicConfig(level=logging.DEBUG, 
                         format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
-    em = manager.ElementManager(args.element, args.hook, args.element_path, args.dry_run)
+    em = manager.ElementManager(args.element, args.hook, args.element_path,
+                                args.dry_run, args.debug)
     em.run()
 
 
