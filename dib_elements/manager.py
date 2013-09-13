@@ -87,7 +87,7 @@ class ElementManager(object):
             os.unlink('/tmp/in_target.d')
         except:
             pass
-        os.link(self.tmp_hook_dir, '/tmp/in_target.d')
+        os.symlink(self.tmp_hook_dir, '/tmp/in_target.d')
         os.environ['TMP_HOOKS_PATH'] = self.tmp_hook_dir
         os.environ['PATH'] = '%s:%s/bin' % (os.environ['PATH'],
                                             self.tmp_hook_dir)
