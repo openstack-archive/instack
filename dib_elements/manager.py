@@ -83,7 +83,14 @@ class ElementManager(object):
             element_dir = self.loaded_elements[element].directory
             dir_util.copy_tree(element_dir, self.tmp_hook_dir)
         # elements expect this environment variable to be set
+        try:
+            os.unlink('/tmp/in_target.d')
+        except:
+            pass
+        os.link(self.tmp_hook_dir, '/tmp/in_target.d')
         os.environ['TMP_HOOKS_PATH'] = self.tmp_hook_dir
+        os.environ['PATH'] = '%s:%s/bin' % (os.environ['PATH'],
+                                            self.tmp_hook_dir)
 
     def process_path(self, path):
         """Load elements from a given filesystem path.
