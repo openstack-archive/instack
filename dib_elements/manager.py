@@ -89,8 +89,11 @@ class ElementManager(object):
             pass
         os.symlink(self.tmp_hook_dir, '/tmp/in_target.d')
         os.environ['TMP_HOOKS_PATH'] = self.tmp_hook_dir
-        os.environ['PATH'] = '%s:%s/bin' % (os.environ['PATH'],
-                                            self.tmp_hook_dir)
+        if os.environ.has_key('PATH'):
+            os.environ['PATH'] = '%s:%s/bin' % (os.environ['PATH'],
+                                                self.tmp_hook_dir)
+        else:
+            os.environ['PATH'] = '%s/bin' % self.tmp_hook_dir
 
     def process_path(self, path):
         """Load elements from a given filesystem path.
