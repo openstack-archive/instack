@@ -52,7 +52,7 @@ class ElementManager(object):
         else:
             self.element_paths = element_paths
 
-        if self.element_paths is None:        
+        if self.element_paths is None:
             raise Exception
 
         logging.info('manager initialized with elements path: %s' %
@@ -82,15 +82,18 @@ class ElementManager(object):
         for element in self.elements:
             element_dir = self.loaded_elements[element].directory
             dir_util.copy_tree(element_dir, self.tmp_hook_dir)
-        # elements expect this environment variable to be set
         try:
             os.unlink('/tmp/in_target.d')
         except:
             pass
         os.symlink(self.tmp_hook_dir, '/tmp/in_target.d')
+
+        # elements expect this environment variable to be set
         os.environ['TMP_HOOKS_PATH'] = self.tmp_hook_dir
-        os.environ['PATH'] = '%s:%s/bin' % (os.environ['PATH'],
-                                            self.tmp_hook_dir)
+        tmp_path = '%s/bin' % self.tmp_hook_dir
+        if 'PATH' in os.environ:
+            tmp_path = os.environ["PATH"] + os.pathsep + tmp_path
+        os.environ["PATH"] = tmp_path
 
     def process_path(self, path):
         """Load elements from a given filesystem path.
