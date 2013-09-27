@@ -136,7 +136,7 @@ class ElementManager(object):
             if not self.dry_run:
                 # environment must be preseverd so that the variables set
                 # earlier in os.environ are available in the scripts.
-                rc = call(['sudo', '-E', '/bin/bash', script])
+                rc = call(['/bin/sudo', '-E', '/bin/bash', script])
                 if rc != 0:
                     logging.error("scripted failed: %s" % script)
                     if self.interactive:
