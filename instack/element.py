@@ -23,7 +23,8 @@ class Element(object):
     """A diskimage-builder element."""
 
     def __init__(self, directory):
-        """
+        """Element initialization.
+
         :param directory: The directory that defines the element.
         :type directory str.
         """

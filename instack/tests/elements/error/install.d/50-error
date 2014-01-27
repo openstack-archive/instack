@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo ERROR ELEMENT >&2
+exit 1

@@ -18,13 +18,15 @@ import argparse
 import logging
 import os
 import platform
+import sys
 
-from dib_elements import manager
+from instack import runner
 
 
-def load_args():
+def load_args(argv):
     parser = argparse.ArgumentParser(
-        description="Execute diskimage-builder elements on the current system.")
+        description="Execute diskimage-builder elements on the current "
+                    "system.")
     parser.add_argument(
         '-e', '--element', nargs='+',
         help="element(s) to execute")
@@ -36,6 +38,13 @@ def load_args():
         '-k', '--hook', nargs='+', required=True,
         help=("hook(s) to execute for each element"))
     parser.add_argument(
+        '-b', '--blacklist', nargs='+',
+        help=("script names, that if found, will be blacklisted and not run"))
+    parser.add_argument(
+        '-x', '--exclude-element', nargs='+',
+        help=("element names that will be excluded from running even if "
+              "they are listed as dependencies"))
+    parser.add_argument(
         '-d', '--debug', action='store_true',
         help=("Debugging output"))
     parser.add_argument(
@@ -45,7 +54,10 @@ def load_args():
         '--dry-run', action='store_true',
         help=("Dry run only, don't actually modify system, prints out "
               "what would have been run."))
-    return parser.parse_args()
+    parser.add_argument(
+        '--no-cleanup', action='store_true',
+        help=("Do not cleanup tmp directories"))
+    return parser.parse_args(argv)
 
 
 def set_environment():
@@ -53,23 +65,28 @@ def set_environment():
 
     os.environ['TMP_MOUNT_PATH'] = '/'
     os.environ['DIB_OFFLINE'] = ''
+    os.environ['DIB_INIT_SYSTEM'] = 'systemd'
+    os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
     if platform.processor() == 'x86_64':
         os.environ['ARCH'] = 'amd64'
     else:
         os.environ['ARCH'] = 'i386'
 
 
-def main():
-    args = load_args()
+def main(argv=sys.argv):
+    args = load_args(argv[1:])
     set_environment()
     if args.debug:
-        logging.basicConfig(level=logging.DEBUG, 
-                            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
     else:
-        logging.basicConfig(level=logging.INFO, 
-                            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
-    em = manager.ElementManager(args.element, args.hook, args.element_path,
-                                args.dry_run, args.interactive)
+        logging.basicConfig(
+            level=logging.INFO,
+            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
+    em = runner.ElementRunner(args.element, args.hook, args.element_path,
+                              args.blacklist, args.exclude_element,
+                              args.dry_run, args.interactive, args.no_cleanup)
     em.run()
 
 
