@@ -17,13 +17,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = "python-dib-elements",
+    name = "instack",
     description = "Execute diskimage-builder elements on the current system.",
     version = "0.1",
     packages = find_packages(),
     entry_points = {
         'console_scripts': [
-            'dib-elements = dib_elements.main:main',
+            'instack = instack.main:main',
         ],
     },
 )
