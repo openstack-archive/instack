@@ -30,7 +30,7 @@ from instack import element
 class ElementRunner(object):
 
     def __init__(self, elements, hooks, element_paths=None, blacklist=None,
-                 exclude_element=None, dry_run=False, interactive=False,
+                 exclude_elements=None, dry_run=False, interactive=False,
                  no_cleanup=False):
         """Element Runner initialization.
 
@@ -47,7 +47,7 @@ class ElementRunner(object):
         self.dry_run = dry_run
         self.hooks = hooks
         self.blacklist = blacklist or []
-        self.exclude_element = exclude_element or []
+        self.exclude_elements = exclude_elements or []
         self.interactive = interactive
         self.no_cleanup = no_cleanup
         self.loaded_elements = {}
@@ -68,7 +68,7 @@ class ElementRunner(object):
 
         self.load_elements()
         self.load_dependencies()
-        self.exclude_elements()
+        self.process_exclude_elements()
         self.copy_elements()
 
     def run(self):
@@ -135,10 +135,10 @@ class ElementRunner(object):
         self.elements = all_elements
         logging.info("List of all elements: %s" % self.elements)
 
-    def exclude_elements(self):
+    def process_exclude_elements(self):
         """Remove any elements that have been specified as excluded."""
-        for elem in self.exclude_element:
-            if elem in self.elem:
+        for elem in self.exclude_elements:
+            if elem in self.elements:
                 logging.info("Excluding element %s" % elem)
                 self.elements.remove(elem)
 

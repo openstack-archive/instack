@@ -68,12 +68,12 @@ class TestRunner(testtools.TestCase):
         self.assertEqual(len(self.runner.elements), 3)
         self.assertTrue('dep1' in self.runner.elements)
 
-    def test_exclude_elements(self):
+    def test_process_exclude_elements(self):
         self.runner.exclude_elements = ['dep1']
 
         self.runner.copy_elements()
         self.runner.load_dependencies()
-        self.runner.exclude_elements()
+        self.runner.process_exclude_elements()
 
         self.assertEqual(len(self.runner.elements), 2)
         self.assertFalse('dep1' in self.runner.elements)
@@ -81,6 +81,7 @@ class TestRunner(testtools.TestCase):
     def test_process_path(self):
         cwd = os.path.dirname(__file__)
         test_elements = os.path.join(cwd, 'elements')
+        self.runner.loaded_elements = {}
         self.runner.process_path(test_elements)
 
         self.assertEqual(len(self.runner.loaded_elements), 6)
@@ -99,7 +100,7 @@ class TestRunner(testtools.TestCase):
     def test_run_hook(self, mock_call):
         self.runner.copy_elements()
         self.runner.load_dependencies()
-        self.runner.exclude_elements()
+        self.runner.process_exclude_elements()
 
         self.runner.run_hook('install')
 
@@ -114,7 +115,7 @@ class TestRunner(testtools.TestCase):
     def test_blacklist(self, mock_call):
         self.runner.copy_elements()
         self.runner.load_dependencies()
-        self.runner.exclude_elements()
+        self.runner.process_exclude_elements()
 
         self.runner.blacklist = ['50-echo']
         self.runner.run_hook('install')
