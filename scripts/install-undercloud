@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -eux
+
+LOGFILE=~/.instack/install-undercloud.log
+
+mkdir -p ~/.instack
+
+exec > >(tee $LOGFILE)
+exec 2>&1
+
+# Enable icehouse rpm's repo
+sudo yum install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+
+# Clean up from any previous runs...
+# TODO: figure out if we want upstream patches for this along the lines of a
+# "cleanup" element that cleans up the environment at the very beginning of a
+# run.
+sudo rm -rf \
+  /var/lib/use-ephemeral \
+  /etc/neutron/plugin.ini \
+  /opt/stack \
+  /usr/local/bin/*
+
+export DIB_REPOTYPE_nova=package
+export DIB_REPOTYPE_heat=package
+export DIB_REPOTYPE_keystone=package
+export DIB_REPOTYPE_neutron=package
+export DIB_REPOTYPE_glance=package
+export DIB_REPOTYPE_swift=package
+export DIB_REPOTYPE_python_cinderclient=package
+export DIB_REPOTYPE_python_glanceclient=package
+export DIB_REPOTYPE_python_heatclient=package
+export DIB_REPOTYPE_python_keystoneclient=package
+export DIB_REPOTYPE_python_neutronclient=package
+export DIB_REPOTYPE_python_novaclient=package
+export DIB_REPOTYPE_python_swiftclient=package
+export DIB_REPOTYPE_python_ceilometerclient=package
+
+sudo -E instack \
+  -p diskimage-builder/elements/ tripleo-image-elements/elements/ \
+  -j instack/json-files/fedora-20-undercloud.json

@@ -1,0 +1,37 @@
+[
+  { "element": [
+      "base",
+      "dib-run-parts"
+    ],
+    "hook": [
+      "root",
+      "pre-install"
+    ],
+    "blacklist": [
+      "01-ccache"
+    ]
+  },
+  {
+    "element": [
+      "fedora",
+      "boot-stack",
+      "nova-baremetal",
+      "os-collect-config",
+      "dhcp-all-interfaces",
+      "neutron-dhcp-agent"
+    ],
+    "hook": [
+      "extra-data",
+      "pre-install",
+      "install",
+      "post-install"
+    ],
+    "exclude-element": [
+      "yum",
+      "dkms"
+    ],
+    "blacklist": [
+      "15-fedora-remove-grub"
+    ]
+  }
+]
