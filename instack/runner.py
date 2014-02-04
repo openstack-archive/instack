@@ -159,9 +159,8 @@ class ElementRunner(object):
                 logging.info("Blacklisting %s" % blacklisted_script)
                 os.unlink(os.path.join(hook_dir, blacklisted_script))
 
-        rc, stdout = call(['dib-run-parts', hook_dir],
-                          stdout=sys.stdout, stderr=sys.stderr,
-                          env=os.environ)
+        rc = call(['dib-run-parts', hook_dir],
+                                  env=os.environ)
 
         if rc != 0:
             logging.error("dib-run-parts hook failed: %s" % hook_dir)
@@ -183,16 +182,11 @@ def call(command, **kwargs):
     logging.info('executing command: %s' % command)
 
     p = subprocess.Popen(command,
+                         stdout=sys.stdout,
+                         stderr=sys.stderr,
                          **kwargs)
 
     rc = p.wait()
-
-    if p.stdout:
-        stdout = p.stdout.read()
-        print(stdout)
-    else:
-        stdout = None
-
     logging.info('  exited with code: %s' % rc)
 
-    return rc, stdout
+    return rc
