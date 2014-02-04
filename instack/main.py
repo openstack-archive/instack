@@ -15,6 +15,7 @@
 
 
 import argparse
+import json
 import logging
 import os
 import platform
@@ -28,22 +29,25 @@ def load_args(argv):
         description="Execute diskimage-builder elements on the current "
                     "system.")
     parser.add_argument(
-        '-e', '--element', nargs='+',
+        '-e', '--element', nargs='*',
         help="element(s) to execute")
     parser.add_argument(
         '-p', '--element-path', nargs='+',
         help=("element path(s) to search for elements (ELEMENTS_PATH "
               "environment variable will take precedence if defined)"))
     parser.add_argument(
-        '-k', '--hook', nargs='+', required=True,
+        '-k', '--hook', nargs='*',
         help=("hook(s) to execute for each element"))
     parser.add_argument(
-        '-b', '--blacklist', nargs='+',
+        '-b', '--blacklist', nargs='*',
         help=("script names, that if found, will be blacklisted and not run"))
     parser.add_argument(
-        '-x', '--exclude-element', nargs='+',
+        '-x', '--exclude-element', nargs='*',
         help=("element names that will be excluded from running even if "
               "they are listed as dependencies"))
+    parser.add_argument(
+        '-j', '--json-file',
+        help=("read runtime configuration from json file"))
     parser.add_argument(
         '-d', '--debug', action='store_true',
         help=("Debugging output"))
@@ -57,7 +61,15 @@ def load_args(argv):
     parser.add_argument(
         '--no-cleanup', action='store_true',
         help=("Do not cleanup tmp directories"))
-    return parser.parse_args(argv)
+
+    args = parser.parse_args(argv)
+
+    if args.json_file and (args.element or args.hook or args.exclude_element):
+        print "--json-file not compatible with --element, --hook,"
+        print "--exclude-element, or --blacklist"
+        sys.exit(1)
+
+    return args
 
 
 def set_environment():
@@ -79,15 +91,29 @@ def main(argv=sys.argv):
     if args.debug:
         logging.basicConfig(
             level=logging.DEBUG,
-            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
+            format="%(levelname)s:%(asctime)s -- %(message)s")
     else:
         logging.basicConfig(
             level=logging.INFO,
-            format="%(levelname)s:%(asctime)s:%(name)s:%(message)s")
-    em = runner.ElementRunner(args.element, args.hook, args.element_path,
-                              args.blacklist, args.exclude_element,
-                              args.dry_run, args.interactive, args.no_cleanup)
-    em.run()
+            format="%(levelname)s:%(asctime)s -- %(message)s")
+
+    if args.json_file:
+        json_list = json.loads(open(args.json_file).read())
+        if not isinstance(json_list, list):
+            print "json file should be a list"
+            sys.exit(1)
+
+        for run in json_list:
+            em = runner.ElementRunner(
+                    run['element'], run['hook'], args.element_path, 
+                    run.get('blacklist', []), run.get('exclude-element', []),
+                    args.dry_run, args.interactive, args.no_cleanup)
+            em.run()
+    else:
+        em = runner.ElementRunner(args.element, args.hook, args.element_path,
+                                  args.blacklist, args.exclude_element,
+                                  args.dry_run, args.interactive, args.no_cleanup)
+        em.run()
 
 
 if __name__ == '__main__':
