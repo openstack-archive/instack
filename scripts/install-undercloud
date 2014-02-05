@@ -10,7 +10,21 @@ exec > >(tee $LOGFILE)
 exec 2>&1
 
 # Enable icehouse rpm's repo
-sudo yum install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+sudo yum update http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+
+
+# Upstream dib is fine
+if [ ! -d diskimage-builder ]; then
+  git clone https://git.openstack.org/openstack/diskimage-builder
+fi
+
+# We need the undercloud-stack-config branch of tie
+if [ ! -d tripleo-image-elements ]; then
+  git clone https://github.com/slagle/tripleo-image-elements
+  pushd tripleo-image-elements
+  git checkout undercloud-stack-config
+  popd
+fi
 
 # Clean up from any previous runs...
 # TODO: figure out if we want upstream patches for this along the lines of a
@@ -20,7 +34,8 @@ sudo rm -rf \
   /var/lib/use-ephemeral \
   /etc/neutron/plugin.ini \
   /opt/stack \
-  /usr/local/bin/*
+  /usr/local/bin/* \
+  /mnt/state
 
 export DIB_REPOTYPE_nova=package
 export DIB_REPOTYPE_heat=package

@@ -18,7 +18,8 @@
       "nova-baremetal",
       "os-collect-config",
       "dhcp-all-interfaces",
-      "neutron-dhcp-agent"
+      "neutron-dhcp-agent",
+      "undercloud-stack-config"
     ],
     "hook": [
       "extra-data",
