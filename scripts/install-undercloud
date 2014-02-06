@@ -14,15 +14,16 @@ sudo setenforce 0
 sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 
 # Enable icehouse rpm's repo
-sudo yum -y update http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+sudo yum -y install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm || true
 
+# Can be removed once everything is packaged
 sudo yum -y install python-pip
 
 # Workaround for:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1061045
 # Go ahead and install mariadb-server, and remove the logfile with wrong
 # permissions.
-sudo yum -y update mariadb-server
+sudo yum -y install mariadb-server
 sudo rm -f /var/log/mariadb/mariadb.log
 
 pushd instack
@@ -90,4 +91,3 @@ if [ ! -e /etc/profile.d/tripleo-incubator-scripts.sh ]; then
     sudo bash -c "echo export PATH='\$PATH':/opt/stack/tripleo-incubator/scripts/ >> /etc/profile.d/tripleo-incubator-scripts.sh"
     sudo bash -c "echo export PATH=/opt/stack/diskimage-builder/bin/:'\$PATH' >> /etc/profile.d/tripleo-incubator-scripts.sh"
 fi
-
