@@ -21,6 +21,10 @@ sudo yum -y install python-pip
 sudo yum -y update mariadb-server
 sudo rm -f /var/log/mariadb/mariadb.log
 
+pushd instack
+sudo pip install -e .
+popd
+
 # Upstream dib is fine
 if [ ! -d diskimage-builder ]; then
   git clone https://git.openstack.org/openstack/diskimage-builder
