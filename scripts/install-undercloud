@@ -10,12 +10,23 @@ exec > >(tee $LOGFILE)
 exec 2>&1
 
 # Enable icehouse rpm's repo
-sudo yum update http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
+sudo yum -y update http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
 
+sudo yum -y install python-pip
+
+# Workaround for:
+# https://bugzilla.redhat.com/show_bug.cgi?id=1061045
+# Go ahead and install mariadb-server, and remove the logfile with wrong
+# permissions.
+sudo yum -y update mariadb-server
+sudo rm -f /var/log/mariadb/mariadb.log
 
 # Upstream dib is fine
 if [ ! -d diskimage-builder ]; then
   git clone https://git.openstack.org/openstack/diskimage-builder
+  pushd diskimage-builder
+  sudo pip install -e .
+  popd
 fi
 
 # We need the undercloud-stack-config branch of tie
