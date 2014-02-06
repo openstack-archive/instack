@@ -9,6 +9,10 @@ mkdir -p ~/.instack
 exec > >(tee $LOGFILE)
 exec 2>&1
 
+# As always...
+sudo setenforce 0
+sudo -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
 # Enable icehouse rpm's repo
 sudo yum -y update http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
 
@@ -66,6 +70,13 @@ export DIB_REPOTYPE_python_neutronclient=package
 export DIB_REPOTYPE_python_novaclient=package
 export DIB_REPOTYPE_python_swiftclient=package
 export DIB_REPOTYPE_python_ceilometerclient=package
+
+export DIB_REPOTYPE_os_collect_config=tar
+export DIB_REPOLOCATION_os_collect_config=http://tarballs.openstack.org/os-collect-config/os-collect-config-0.1.10.tar.gz
+export DIB_REPOTYPE_os_refresh_config=tar
+export DIB_REPOLOCATION_os_refresh_config=http://tarballs.openstack.org/os-refresh-config/os-refresh-config-0.0.7.tar.gz
+export DIB_REPOTYPE_os_apply_config=tar
+export DIB_REPOLOCATION_os_apply_config=http://tarballs.openstack.org/os-apply-config/os-apply-config-0.1.11.tar.gz
 
 sudo -E instack \
   -p diskimage-builder/elements/ tripleo-image-elements/elements/ \
