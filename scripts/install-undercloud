@@ -79,7 +79,7 @@ export DIB_REPOLOCATION_os_refresh_config=http://tarballs.openstack.org/os-refre
 export DIB_REPOTYPE_os_apply_config=tar
 export DIB_REPOLOCATION_os_apply_config=http://tarballs.openstack.org/os-apply-config/os-apply-config-0.1.11.tar.gz
 
-INSTACK_DIR=$(dirname $0)../
+INSTACK_DIR=$(dirname $0)/..
 
 source $INSTACK_DIR/instack.answers
 
