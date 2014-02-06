@@ -11,7 +11,7 @@ exec 2>&1
 
 # As always...
 sudo setenforce 0
-sudo -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
 
 # Enable icehouse rpm's repo
 sudo yum -y update http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm
