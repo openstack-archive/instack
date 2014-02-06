@@ -79,6 +79,19 @@ export DIB_REPOLOCATION_os_refresh_config=http://tarballs.openstack.org/os-refre
 export DIB_REPOTYPE_os_apply_config=tar
 export DIB_REPOLOCATION_os_apply_config=http://tarballs.openstack.org/os-apply-config/os-apply-config-0.1.11.tar.gz
 
+INSTACK_DIR=$(dirname $0)../
+
+source $INSTACK_DIR/instack.answers
+
+export LOCAL_IP
+export DNSMASQ_START
+export DNSMASQ_END
+export LOCAL_INTERFACE
+export MASQUERADE_NETWORK
+export POWER_DRIVER
+export VIRTUAL_POWER_USER
+export VIRTUAL_POWER_HOST
+
 sudo -E instack \
   -p diskimage-builder/elements/ tripleo-image-elements/elements/ \
   -j instack/json-files/fedora-20-undercloud.json
