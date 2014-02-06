@@ -81,3 +81,13 @@ export DIB_REPOLOCATION_os_apply_config=http://tarballs.openstack.org/os-apply-c
 sudo -E instack \
   -p diskimage-builder/elements/ tripleo-image-elements/elements/ \
   -j instack/json-files/fedora-20-undercloud.json
+
+# Add scripts directory from tripleo-incubator and diskimage-builder to the
+# path.
+# These scripts can't just be symlinked into a bin directory because they do
+# directory manipulation that assumes they're in a known location.
+if [ ! -e /etc/profile.d/tripleo-incubator-scripts.sh ]; then
+    sudo bash -c "echo export PATH='\$PATH':/opt/stack/tripleo-incubator/scripts/ >> /etc/profile.d/tripleo-incubator-scripts.sh"
+    sudo bash -c "echo export PATH=/opt/stack/diskimage-builder/bin/:'\$PATH' >> /etc/profile.d/tripleo-incubator-scripts.sh"
+fi
+
