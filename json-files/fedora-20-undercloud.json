@@ -32,7 +32,8 @@
       "dkms"
     ],
     "blacklist": [
-      "15-fedora-remove-grub"
+      "15-fedora-remove-grub",
+      "51-ironicclient"
     ]
   }
 ]
