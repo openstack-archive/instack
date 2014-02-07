@@ -79,8 +79,12 @@ export DIB_REPOLOCATION_nova=http://tarballs.openstack.org/nova/nova-2014.1.b2.t
 # export DIB_REPOLOCATION_heat=http://tarballs.openstack.org/heat/heat-2014.1.b2.tar.gz
 export DIB_REPOREF_heat=5f0f9f213c6cf2ddc3ced5600efba72785a3e939
 
-export DIB_REPOTYPE_keystone=tar
-export DIB_REPOLOCATION_keystone=http://tarballs.openstack.org/keystone/keystone-2014.1.b2.tar.gz
+# Getting a 403 from:
+# https://googledrive.com/host/0Bwh63zyus-UlZ1dxQ08zczVRbXc/ipaddr-2.1.11.tar.gz
+# so, install keystone from package
+export DIB_REPOTYPE_keystone=package
+# export DIB_REPOLOCATION_keystone=http://tarballs.openstack.org/keystone/keystone-2014.1.b2.tar.gz
+
 export DIB_REPOTYPE_neutron=tar
 export DIB_REPOLOCATION_neutron=http://tarballs.openstack.org/neutron/neutron-2014.1.b2.tar.gz
 export DIB_REPOTYPE_glance=tar
