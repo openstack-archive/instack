@@ -142,3 +142,5 @@ if [ ! -e /etc/profile.d/tripleo-incubator-scripts.sh ]; then
 fi
 
 sudo os-refresh-config
+
+echo "install-undercloud Complete!"

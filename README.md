@@ -22,7 +22,7 @@ diskimage-builder applies the element to an image build.
         cd ..
 
 3. Run script to install undercloud. The script will produce a lot of output on
-   the sceen. It also logs to ~/.instack/install-undercloud.log.
+   the sceen. It also logs to ~/.instack/install-undercloud.log. You should see
+   `install-undercloud Complete!` at the end of a successful run.
 
         instack/scripts/install-undercloud
-        
