@@ -119,6 +119,10 @@ export MASQUERADE_NETWORK
 export POWER_DRIVER
 export VIRTUAL_POWER_USER
 export VIRTUAL_POWER_HOST
+export DHCP_START
+export DHCP_END
+export NETWORK_CIDR
+export NETWORK_GATEWAY
 
 sudo -E instack \
   -p diskimage-builder/elements/ tripleo-image-elements/elements/ \
