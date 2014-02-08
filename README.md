@@ -32,6 +32,12 @@ diskimage-builder applies the element to an image build.
 
         bash
 
+4. Copy the stackrc file to your homedir so that you can use it a normal user.
+
+    sudo cp /root/stackrc .
+    sudo chown $USER: stackrc
+    source stackrc
+
 4. Add your ssh key pair to nova
 
         user-config

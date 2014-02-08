@@ -20,7 +20,11 @@ sudo yum -y install http://repos.fedorapeople.org/repos/openstack/openstack-iceh
 sudo yum -y install python-pip
 
 # Needed for our iptables rules
+sudo yum -y erase firewalld
 sudo yum -y install iptables-services
+# This does not happen automatically, but is required in the systemd service
+# file for iptables: ConditionPathExists=/etc/sysconfig/iptables
+touch /etc/sysconfig/iptables
 sudo systemctl enable iptables
 sudo systemctl start iptables
 
