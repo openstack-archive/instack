@@ -24,7 +24,7 @@ sudo yum -y erase firewalld
 sudo yum -y install iptables-services
 # This does not happen automatically, but is required in the systemd service
 # file for iptables: ConditionPathExists=/etc/sysconfig/iptables
-touch /etc/sysconfig/iptables
+sudo touch /etc/sysconfig/iptables
 sudo systemctl enable iptables
 sudo systemctl start iptables
 
