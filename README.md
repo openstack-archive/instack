@@ -72,7 +72,7 @@ diskimage-builder applies the element to an image build.
         # $MACS and $PM_* variables should be in the same node order, e.g., the 
         #   first MAC address should correspond to the first power management
         #   IP, etc.
-        setup-baremetal $CPU $MEM $DISK $ARCH $MACS undercloud $PM_IPS $PM_USERS $PM_PASSWORDS
+        setup-baremetal $CPU $MEM $DISK $ARCH "$MACS" undercloud $PM_IPS $PM_USERS $PM_PASSWORDS
 
 7. Create your overcloud heat template. You can adjust COMPUTESCALE to launch
    more than one compute node if you choose to.

@@ -35,6 +35,10 @@ sudo systemctl start iptables
 sudo yum -y install mariadb-server
 sudo rm -f /var/log/mariadb/mariadb.log
 
+# Make sure ssh is enabled and running
+sudo systemctl enable sshd
+sudo systemctl start sshd
+
 pushd instack
 sudo pip install -e .
 popd
