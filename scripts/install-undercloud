@@ -9,6 +9,8 @@ mkdir -p ~/.instack
 exec > >(tee $LOGFILE)
 exec 2>&1
 
+sudo yum -y install python-pip
+
 pushd instack
   sudo pip install -e .
 popd
