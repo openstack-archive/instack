@@ -28,6 +28,9 @@ sudo touch /etc/sysconfig/iptables
 sudo systemctl enable iptables
 sudo systemctl start iptables
 
+# NetworkManager messes up our network config
+sudo yum -y erase NetworkManager
+
 # Workaround for:
 # https://bugzilla.redhat.com/show_bug.cgi?id=1061045
 # Go ahead and install mariadb-server, and remove the logfile with wrong
