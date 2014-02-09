@@ -9,48 +9,15 @@ mkdir -p ~/.instack
 exec > >(tee $LOGFILE)
 exec 2>&1
 
-# As always...
-sudo setenforce 0
-sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
-
-# Enable icehouse rpm's repo
-sudo yum -y install http://repos.fedorapeople.org/repos/openstack/openstack-icehouse/rdo-release-icehouse-1.noarch.rpm || true
-
-# Can be removed once everything is packaged
-sudo yum -y install python-pip
-
-# Needed for our iptables rules
-sudo yum -y erase firewalld
-sudo yum -y install iptables-services
-# This does not happen automatically, but is required in the systemd service
-# file for iptables: ConditionPathExists=/etc/sysconfig/iptables
-sudo touch /etc/sysconfig/iptables
-sudo systemctl enable iptables
-sudo systemctl start iptables
-
-# NetworkManager messes up our network config
-sudo yum -y erase NetworkManager
-
-# Workaround for:
-# https://bugzilla.redhat.com/show_bug.cgi?id=1061045
-# Go ahead and install mariadb-server, and remove the logfile with wrong
-# permissions.
-sudo yum -y install mariadb-server
-sudo rm -f /var/log/mariadb/mariadb.log
-
-# Make sure ssh is enabled and running
-sudo systemctl enable sshd
-sudo systemctl start sshd
-
 pushd instack
-sudo pip install -e .
+  sudo pip install -e .
 popd
 
 # Upstream dib is fine
 if [ ! -d diskimage-builder ]; then
   git clone https://git.openstack.org/openstack/diskimage-builder
   pushd diskimage-builder
-  sudo python setup.py install
+    sudo python setup.py install
   popd
 fi
 
@@ -58,69 +25,12 @@ fi
 if [ ! -d tripleo-image-elements ]; then
   git clone https://github.com/slagle/tripleo-image-elements
   pushd tripleo-image-elements
-  git checkout undercloud-stack-config
+    git checkout undercloud-stack-config
   popd
 fi
 
-# Clean up from any previous runs...
-# TODO: figure out if we want upstream patches for this along the lines of a
-# "cleanup" element that cleans up the environment at the very beginning of a
-# run.
-sudo rm -rf \
-  /var/lib/use-ephemeral \
-  /etc/neutron/plugin.ini \
-  /opt/stack \
-  /usr/local/bin/* \
-  /mnt/state \
-  /var/lib/heat-cfntools
-
-
-# yea....
+# Needed by source-repositories
 sudo yum -y install tar
-
-# nova-manage db sync requires pbr to be installed at runtime when installed
-# from tarball
-sudo yum -y install python-pbr
-
-export DIB_REPOTYPE_nova=tar
-export DIB_REPOLOCATION_nova=http://tarballs.openstack.org/nova/nova-2014.1.b2.tar.gz
-
-# The heat icehouse-2 tarball had a blocker bug
-# export DIB_REPOTYPE_heat=tar
-# export DIB_REPOLOCATION_heat=http://tarballs.openstack.org/heat/heat-2014.1.b2.tar.gz
-export DIB_REPOREF_heat=5f0f9f213c6cf2ddc3ced5600efba72785a3e939
-
-# Getting a 403 from:
-# https://googledrive.com/host/0Bwh63zyus-UlZ1dxQ08zczVRbXc/ipaddr-2.1.11.tar.gz
-# so, install keystone from package
-export DIB_REPOTYPE_keystone=package
-# export DIB_REPOLOCATION_keystone=http://tarballs.openstack.org/keystone/keystone-2014.1.b2.tar.gz
-
-export DIB_REPOTYPE_neutron=tar
-export DIB_REPOLOCATION_neutron=http://tarballs.openstack.org/neutron/neutron-2014.1.b2.tar.gz
-export DIB_REPOTYPE_glance=tar
-export DIB_REPOLOCATION_glance=http://tarballs.openstack.org/glance/glance-2014.1.b2.tar.gz
-export DIB_REPOTYPE_swift=tar
-export DIB_REPOLOCATION_swift=http://tarballs.openstack.org/swift/swift-1.11.0.tar.gz
-export DIB_REOTYPE_cinder=tar
-export DIB_REPOLOCATION_cinder=http://tarballs.openstack.org/cinder/cinder-2014.1.b2.tar.gz
-
-# Use packages for the clients
-export DIB_REPOTYPE_python_cinderclient=package
-export DIB_REPOTYPE_python_glanceclient=package
-export DIB_REPOTYPE_python_heatclient=package
-export DIB_REPOTYPE_python_keystoneclient=package
-export DIB_REPOTYPE_python_neutronclient=package
-export DIB_REPOTYPE_python_novaclient=package
-export DIB_REPOTYPE_python_swiftclient=package
-export DIB_REPOTYPE_python_ceilometerclient=package
-
-export DIB_REPOTYPE_os_collect_config=tar
-export DIB_REPOLOCATION_os_collect_config=http://tarballs.openstack.org/os-collect-config/os-collect-config-0.1.10.tar.gz
-export DIB_REPOTYPE_os_refresh_config=tar
-export DIB_REPOLOCATION_os_refresh_config=http://tarballs.openstack.org/os-refresh-config/os-refresh-config-0.0.7.tar.gz
-export DIB_REPOTYPE_os_apply_config=tar
-export DIB_REPOLOCATION_os_apply_config=http://tarballs.openstack.org/os-apply-config/os-apply-config-0.1.11.tar.gz
 
 INSTACK_DIR=$(dirname $0)/..
 
@@ -142,15 +52,6 @@ export NETWORK_GATEWAY
 sudo -E instack \
   -p diskimage-builder/elements/ tripleo-image-elements/elements/ \
   -j instack/json-files/fedora-20-undercloud.json
-
-# Add scripts directory from tripleo-incubator and diskimage-builder to the
-# path.
-# These scripts can't just be symlinked into a bin directory because they do
-# directory manipulation that assumes they're in a known location.
-if [ ! -e /etc/profile.d/tripleo-incubator-scripts.sh ]; then
-    sudo bash -c "echo export PATH='\$PATH':/opt/stack/tripleo-incubator/scripts/ >> /etc/profile.d/tripleo-incubator-scripts.sh"
-    sudo bash -c "echo export PATH=/opt/stack/diskimage-builder/bin/:'\$PATH' >> /etc/profile.d/tripleo-incubator-scripts.sh"
-fi
 
 sudo os-refresh-config
 

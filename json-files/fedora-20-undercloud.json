@@ -13,13 +13,15 @@
   },
   {
     "element": [
+      "undercloud-install",
       "fedora",
       "boot-stack",
       "nova-baremetal",
       "os-collect-config",
       "dhcp-all-interfaces",
       "neutron-dhcp-agent",
-      "undercloud-stack-config"
+      "undercloud-stack-config",
+      "selinux-permissive"
     ],
     "hook": [
       "extra-data",
