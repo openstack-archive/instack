@@ -13,12 +13,14 @@ load-image overcloud-compute.qcow2
 
 # setup-baremetal requires this to be set
 export TRIPLEO_ROOT=.
-$CPU=1
-$MEM=2048
-$DISK=30
-$ARCH=amd64
-$MACS="52:54:00:b5:bd:f0 52:54:00:f2:be:f0"
+CPU=1
+MEM=2048
+DISK=30
+ARCH=amd64
+MACS="52:54:00:b5:bd:f0 52:54:00:f2:be:f0"
 setup-baremetal $CPU $MEM $DISK $ARCH "$MACS" undercloud 
+
+sleep 30
 
 sudo make -C /opt/stack/tripleo-heat-templates overcloud.yaml COMPUTESCALE=1
 
