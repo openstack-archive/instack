@@ -33,7 +33,8 @@
     ],
     "blacklist": [
       "15-fedora-remove-grub",
-      "51-ironicclient"
+      "51-ironicclient",
+      "05-fstab-rootfs-label"
     ]
   }
 ]
