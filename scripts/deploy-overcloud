@@ -6,6 +6,11 @@ sudo cp /root/stackrc .
 sudo chown $USER: stackrc
 source stackrc
 
+# generate ssh authentication keys if they don't exist
+if [ ! -f ~/.ssh/id_rsa ]; then
+  ssh-keygen -t rsa -N ""  -f ~/.ssh/id_rsa
+fi
+
 user-config
 
 load-image overcloud-control.qcow2
