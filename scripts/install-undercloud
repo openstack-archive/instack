@@ -19,6 +19,9 @@ popd
 if [ ! -d diskimage-builder ]; then
   git clone https://git.openstack.org/openstack/diskimage-builder
   pushd diskimage-builder
+    git remote add github-slagle https://github.com/slagle/diskimage-builder.git
+    git fetch github-slagle
+    git checkout environmentd
     sudo python setup.py install
   popd
 fi
