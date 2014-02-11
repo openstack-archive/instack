@@ -9,6 +9,11 @@ mkdir -p ~/.instack
 exec > >(tee $LOGFILE)
 exec 2>&1
 
+# generate ssh authentication keys if they don't exist
+if [ ! -f ~/.ssh/id_rsa ]; then
+  ssh-keygen -t rsa -N ""  -f ~/.ssh/id_rsa
+fi
+
 sudo yum -y install python-pip
 
 pushd instack
