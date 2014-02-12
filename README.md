@@ -49,8 +49,8 @@ diskimage-builder applies the element to an image build.
 
 5. Download overcloud images
 
-        curl -L -O http://fedorapeople.org/~slagle/slagle-tripleo-images-fedora-i2/overcloud-compute.qcow2
-        curl -L -O http://fedorapeople.org/~slagle/slagle-tripleo-images-fedora-i2/overcloud-control.qcow2
+        curl -L -O http://file.rdu.redhat.com/~jslagle/tripleo-images-fedora-i2-dib-patches/overcloud-compute.qcow2
+        curl -L -O http://file.rdu.redhat.com/~jslagle/tripleo-images-fedora-i2-dib-patches/overcloud-control.qcow2
 
 5. Load images into glance
 
