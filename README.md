@@ -7,6 +7,9 @@ diskimage-builder applies the element to an image build.
 
 [1] https://github.com/stackforge/diskimage-builder
 
+An undercloud based installer that uses instack is at:
+https://github.com/slagle/instack-undercloud
+
 Use the command line arguments for fine grained control over which elements to
 apply, or drive instack via a declarative style json file (see
 https://github.com/slagle/instack-undercloud/blob/master/json-files/fedora-20-undercloud.json
