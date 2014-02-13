@@ -96,7 +96,7 @@ class TestRunner(testtools.TestCase):
                           '/tmp/non/existant/path')
 
     @mock.patch('instack.runner.call',
-                return_value=(0, ""))
+                return_value=0)
     def test_run_hook(self, mock_call):
         self.runner.copy_elements()
         self.runner.load_dependencies()
@@ -111,7 +111,7 @@ class TestRunner(testtools.TestCase):
             mock_call.call_args_list[0][0][0])
 
     @mock.patch('instack.runner.call',
-                return_value=(0, ''))
+                return_value=0)
     def test_blacklist(self, mock_call):
         self.runner.copy_elements()
         self.runner.load_dependencies()
