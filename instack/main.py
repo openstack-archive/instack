@@ -20,6 +20,7 @@ import logging
 import os
 import platform
 import sys
+import tempfile
 
 from instack import runner
 
@@ -75,7 +76,9 @@ def load_args(argv):
 def set_environment():
     """Set environment variables that diskimage-builder elements expect."""
 
-    os.environ['TMP_MOUNT_PATH'] = '/'
+    tmp_dir = tempfile.mkdtemp(prefix='instack.')
+    os.environ['TMP_MOUNT_PATH'] = os.path.join(tmp_dir, 'mnt')
+    os.symlink('/', os.environ['TMP_MOUNT_PATH'])
     os.environ['DIB_OFFLINE'] = ''
     os.environ['DIB_INIT_SYSTEM'] = 'systemd'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
