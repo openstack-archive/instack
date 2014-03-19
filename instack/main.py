@@ -81,6 +81,7 @@ def set_environment():
     os.symlink('/', os.environ['TMP_MOUNT_PATH'])
     os.environ['DIB_OFFLINE'] = ''
     os.environ['DIB_INIT_SYSTEM'] = 'systemd'
+    os.environ['IMAGE_NAME'] = 'instack'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
     if platform.processor() == 'x86_64':
         os.environ['ARCH'] = 'amd64'
