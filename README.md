@@ -74,7 +74,7 @@ On Fedora, apply the keystone element:
 
 <pre><code>
 sudo -E instack \
-    -p tripleo-image-elements/elements/ diskimage-builder/elements/ \
+    -p /usr/share/tripleo-image-elements /usr/share/diskimage-builder/elements \
     -e fedora base keystone \
     -k extra-data pre-install install post-install \
     -b 15-remove-grub 10-cloud-init
