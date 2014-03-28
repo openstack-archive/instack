@@ -83,6 +83,7 @@ def set_environment(tmp_dir):
     os.environ['DIB_INIT_SYSTEM'] = 'systemd'
     os.environ['IMAGE_NAME'] = 'instack'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
+    os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
     if platform.processor() == 'x86_64':
         os.environ['ARCH'] = 'amd64'
     else:
