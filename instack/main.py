@@ -74,10 +74,9 @@ def load_args(argv):
     return args
 
 
-def set_environment():
+def set_environment(tmp_dir):
     """Set environment variables that diskimage-builder elements expect."""
 
-    tmp_dir = tempfile.mkdtemp(prefix='instack.')
     os.environ['TMP_MOUNT_PATH'] = os.path.join(tmp_dir, 'mnt')
     os.symlink('/', os.environ['TMP_MOUNT_PATH'])
     os.environ['DIB_OFFLINE'] = ''
@@ -89,12 +88,13 @@ def set_environment():
     else:
         os.environ['ARCH'] = 'i386'
 
-def cleanup():
-    shutil.rmtree(os.environ['TMP_MOUNT_PATH'])
+def cleanup(tmp_dir):
+    shutil.rmtree(tmp_dir)
 
 def main(argv=sys.argv):
     args = load_args(argv[1:])
-    set_environment()
+    tmp_dir = tempfile.mkdtemp(prefix='instack.')
+    set_environment(tmp_dir)
     if args.debug:
         logging.basicConfig(
             level=logging.DEBUG,
@@ -123,7 +123,7 @@ def main(argv=sys.argv):
                                       args.dry_run, args.interactive, args.no_cleanup)
             em.run()
     finally:
-        cleanup()
+        cleanup(tmp_dir)
 
 
 if __name__ == '__main__':
