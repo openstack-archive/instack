@@ -1,14 +1,22 @@
 instack
 =======
 
-Execute diskimage-builder[1] elements on the current system.  This enables a
+instack executes [diskimage-builder](https://github.com/openstack/diskimage-builder)
+style elements on the current system.  This enables a
 current running system to have an element applied in the same way that
 diskimage-builder applies the element to an image build.
 
-[1] https://github.com/stackforge/diskimage-builder
+instack, in its current form, should be considered low level tooling. It is meant
+to be used by higher level scripting that understands what elements and
+hook scripts need execution. Using instack requires a rather in depth
+knowledge of the elements within diskimage-builder and tripleo-image-elements.
 
-An undercloud based installer that uses instack is at:
+An example of higher level tooling that uses instack to install a TripleO style
+undercloud is at:
 https://github.com/agroup/instack-undercloud
+
+Usage
+-----
 
 Use the command line arguments for fine grained control over which elements to
 apply, or drive instack via a declarative style json file (see
