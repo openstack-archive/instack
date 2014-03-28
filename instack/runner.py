@@ -51,7 +51,6 @@ class ElementRunner(object):
         self.interactive = interactive
         self.no_cleanup = no_cleanup
         self.loaded_elements = {}
-        # self.tmp_hook_dir = '/tmp/in_target.d'
         self.tmp_hook_dir = tempfile.mkdtemp()
 
         # the environment variable should override anything passed in
@@ -159,21 +158,24 @@ class ElementRunner(object):
                 logging.info("Blacklisting %s" % blacklisted_script)
                 os.unlink(os.path.join(hook_dir, blacklisted_script))
 
-        rc = call(['dib-run-parts', hook_dir],
-                                  env=os.environ)
+        command = ['dib-run-parts', hook_dir]
+        if self.dry_run:
+            logging.info("Dry Run specified, not running: %s" % command)
+        else:
+            rc = call(command, env=os.environ)
 
-        if rc != 0:
-            logging.error("dib-run-parts hook failed: %s" % hook_dir)
-            if self.interactive:
-                logging.error("Continue? (y/n): ")
-                sys.stdout.flush()
-                entry = raw_input("")
-                if entry.lower() == 'y':
-                    logging.info("continuing on user command.")
-                    return
+            if rc != 0:
+                logging.error("dib-run-parts hook failed: %s" % hook_dir)
+                if self.interactive:
+                    logging.error("Continue? (y/n): ")
+                    sys.stdout.flush()
+                    entry = raw_input("")
+                    if entry.lower() == 'y':
+                        logging.info("continuing on user command.")
+                        return
 
-            logging.error("exiting after failure.")
-            sys.exit(rc)
+                logging.error("exiting after failure.")
+                sys.exit(rc)
 
 
 def call(command, **kwargs):

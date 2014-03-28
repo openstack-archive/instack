@@ -1,0 +1,566 @@
+commit 27f0b61ee0d094fbef2582c6f70837b26f2dd591
+Author: James Slagle <jslagle@redhat.com>
+Date:   Wed Mar 19 15:37:07 2014 -0400
+
+    Set  as well
+
+commit d49b1f6a0fa7967c1ae8db5588208b83a263d619
+Author: James Slagle <jslagle@redhat.com>
+Date:   Wed Mar 19 15:13:18 2014 -0400
+
+    Use a true temporary directory symlinked to / for . This makes instack more like dib and fixes an issue with writhing the GIT_MANIFEST from source-repositories
+
+commit 3a72756a6460a0d4a7112c4d7d2f098dd36f488c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 18 07:37:23 2014 -0500
+
+    Add cookiecutter code for OpenStack project
+
+commit a160546dd1d2af7c4574a7f6a424a1891f20849f
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 13 11:20:10 2014 -0500
+
+    Fix tests
+
+commit 4105d984dfc4bc10138492c4cd9e01fa56df8987
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 13 09:56:27 2014 -0500
+
+    Add link to instack-undercloud
+
+commit f17fa21f910a1a1ba6df24077cbf63e5ea9dc529
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 13 08:55:38 2014 -0500
+
+    Update README
+
+commit a338313c70959ad58dd24e6b8aa1757da7f4471b
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 13 08:08:31 2014 -0500
+
+    Split repo into instack vs undercloud specifics
+
+commit e6348707aa5555747f3b3e7b1fc9dbd8705a4dad
+Author: James Slagle <jslagle@redhat.com>
+Date:   Wed Feb 12 18:08:54 2014 -0500
+
+    Update image links
+
+commit 709cef321d420d967c3fbdcf18a87e97bdfd9801
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 11 13:12:21 2014 -0500
+
+    need quotes here
+
+commit a69a3335a2e28eeb39f812296e16bfe789292e20
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 11 12:37:30 2014 -0500
+
+    Generate ssh key in install-undercloud
+
+commit 767d7f52fba33f0266e04dd2ae6ba375e56d2d26
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 11 11:35:03 2014 -0500
+
+    Fix path
+
+commit a20850b30100ce00ec8274d2cb05c6fb14fb867e
+Merge: 5de3fe1 72bb952
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 11 10:53:58 2014 -0500
+
+    Merge branch 'master' into undercloud-install
+    
+    Conflicts:
+    	scripts/install-undercloud
+
+commit 5de3fe1577cbebf7eb0b66494a42b95a9af52cc5
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 11 10:08:40 2014 -0500
+
+    Use branch of dib for now
+
+commit b7d4363a0cae33b06439ede80bfde3f635c7d40e
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 11 08:01:00 2014 -0500
+
+    sync with changes from master
+
+commit 72bb9520b4b3fbb52450e7e7a38f6ee7f4af72f7
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 15:44:02 2014 -0500
+
+    add step to restart xinetd
+
+commit 298aba03a8f56185ec45a92822311975b301d99d
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 15:41:48 2014 -0500
+
+    Add notes about using Overcloud
+
+commit 7edda5523f0e8a13a0e009f2741877ec1846171c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 15:37:34 2014 -0500
+
+    add ssh key generation
+
+commit e22bbd5623b798c467b6443e0c291a939367093d
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 15:36:51 2014 -0500
+
+    rename script
+
+commit be8adf4036d89ef3d100f0318699740c92ba99ec
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 11:28:25 2014 -0500
+
+    ok to leave NetworkManager around
+
+commit 9e64bc5f7799c718c599bdbbf63e1a1fb637303e
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 11:28:10 2014 -0500
+
+    don't install dhcp-all-interfaces
+
+commit 974e04eca2d002d75dae9c4916fdd29db4753282
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 07:20:45 2014 -0500
+
+    add script to deploy overcloud in dev env
+
+commit a3aaf8303d05d9d7f5a81657bccfc1792974963f
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 07:19:03 2014 -0500
+
+    add script to deploy overcloud in dev env
+
+commit d6e65dd04d6cfe9db3f7405ed93022f8a43bcf69
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 10 07:18:44 2014 -0500
+
+    blacklist root partition rename
+
+commit c8bc6d17a88b930e73dec0984adde83423689dcb
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 16:29:02 2014 -0500
+
+    cleanup needs to run before source-repositories
+
+commit 9af81b963473ce78e01854d3db679cf65827d02a
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 16:27:47 2014 -0500
+
+    fix bad copy/paste
+
+commit e633be99ff880ab6b82e76831bc59db54ae2e680
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 16:23:20 2014 -0500
+
+    add new element path
+
+commit 2d90f04d0aa565cdcb60b8da4775a20d32ae5b91
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 16:20:04 2014 -0500
+
+    still need to install pip
+
+commit 1e3823d26ef5a94f6099815f8f8f799ac3755b78
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 15:49:27 2014 -0500
+
+    Move a lot of install steps into a new element
+
+commit 441f8904b9003fadb11bede474afdc5c9dceefb8
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 12:02:03 2014 -0500
+
+    erase NetworkManager
+
+commit 4c27fc102f3653e2db8b595d9adac56bda00db70
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 11:48:42 2014 -0500
+
+    enable ssh and add quotes around
+
+commit 40de31eba9baf54aae60ba6510607a615f99fa6f
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sun Feb 9 11:06:00 2014 -0500
+
+    Fix README formatting
+
+commit 6c54d87c9c25fa47a081f6a72e71b92b14cbf588
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sat Feb 8 15:53:56 2014 -0500
+
+    sudo needed here
+
+commit bab3c9fd6b5e623dc7e581584ec090697cbcc989
+Author: James Slagle <jslagle@redhat.com>
+Date:   Sat Feb 8 15:41:55 2014 -0500
+
+    erase firewalld
+
+commit 62ebed9f6c05902484371f9b60d02757aeacb32c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Feb 7 14:12:29 2014 -0500
+
+    more docs
+
+commit 1ef96133aae9cbb63fe2457e46682fff4430de23
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Feb 7 08:50:15 2014 -0500
+
+    Make it obvious when the installation has succeeded
+
+commit f794d9de22dcb278b6cb06d1442eebd4de2d7282
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Feb 7 08:19:12 2014 -0500
+
+    add docs
+
+commit b4e277f1caefc0654963cadee9ad9194a88531f7
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Feb 7 08:05:15 2014 -0500
+
+    install keystone from package for now
+
+commit be70c87e60b4591d37e28d73306ec201e4f9f89a
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Feb 7 07:33:27 2014 -0500
+
+    better defaults
+
+commit a2e816353cc9e04f32018d08a4765216c8a50798
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Feb 7 07:30:51 2014 -0500
+
+    make more parameters templatable
+
+commit 72c9850b2acbd65938d831c37c79ed17c7b699f0
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 20:38:09 2014 -0500
+
+    Make sure iptables-services is installed
+
+commit c51a0ef59b8fce8380de5ee1db62be1eb8018adf
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 19:44:51 2014 -0500
+
+    Run os-refresh-config at the end.
+    
+    Could probably make this an option to instack instead.
+
+commit 82c58a5fbb6f79fbff3a533e1ff603724078b249
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 18:57:18 2014 -0500
+
+    Update to build from tarballs
+
+commit 8ba433940f35155cc06ab84f6cfb7c1cbeafcb3b
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 16:02:52 2014 -0500
+
+    Fix directory check
+
+commit 7a2b56034bb2b2a6196ebf110bbb10439d291850
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 15:39:34 2014 -0500
+
+    Fix default dnsmasq range values
+
+commit 338b6f097fda34132da8f1ad2637fd2e83fcc9c5
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 15:28:06 2014 -0500
+
+    Add answers file support
+
+commit ae58ca6500bd3034b76f0ee77ec4d652870f7336
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 08:38:23 2014 -0500
+
+    Use install instead of update
+
+commit 70bd3e81cff59d11bd26e547a0aa11631635c99c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 08:18:59 2014 -0500
+
+    Actually call sed
+
+commit d71ebd71922545f4894d5a88af198d5428732c72
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 08:02:41 2014 -0500
+
+    Add tripleo-incubator/scripts to /home/jslagle/bin:/usr/lib64/qt-3.3/bin:/usr/libexec/lightdm:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/home/jslagle/.local/bin:/home/jslagle/bin
+
+commit 7be18b41fc23d2fdfec163c14d1cf30449df2c0c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 08:02:27 2014 -0500
+
+    Don't install ironicclient for now
+
+commit c561dd30e1a3afb1e21691747d5cb04f25cfc56e
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Feb 6 07:47:20 2014 -0500
+
+    install-undercloud improvements
+
+commit 8f0889a1f96b8b42e0a73f20ca7b5108165387fd
+Author: James Slagle <jslagle@redhat.com>
+Date:   Wed Feb 5 20:43:44 2014 -0500
+
+    install-undercloud improvements
+
+commit 344a5d6641d7dc61641ba8b9862c226b6d1cc53e
+Author: James Slagle <jslagle@redhat.com>
+Date:   Wed Feb 5 20:36:27 2014 -0500
+
+    install-undercloud improvements
+
+commit 346a6ab46548bc862abb6658298b0987db124a82
+Author: James Slagle <jslagle@redhat.com>
+Date:   Wed Feb 5 17:59:47 2014 -0500
+
+    install-undercloud improvements
+
+commit 925f50e3f1e1753bf585d283f01eaea01adb6442
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 4 10:56:37 2014 -0500
+
+    update README
+
+commit 64dee7576208d0b850c7e7d9127aee8b1549e35d
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 4 10:31:47 2014 -0500
+
+    better handling of stdout
+
+commit 5c382202f7d33c099c893db13050d741816b54ba
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 4 10:31:24 2014 -0500
+
+    Add support for --json-file to drive a run of instack
+
+commit 8667571bdefb2920984d90446e0f6960cb4b5ca3
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Feb 4 10:30:56 2014 -0500
+
+    Add top level script and json config file for undercloud install
+
+commit 60720be4b0bd93ff2781b9ca48206bfad771b404
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 3 13:48:29 2014 -0500
+
+    Fix other unit tests
+
+commit 5ee843932c077c79330e58a3064a82253ffd8860
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Feb 3 13:48:22 2014 -0500
+
+    Rename to instack
+
+commit bad7b6edea10397cad203ddc6c0de2ae13714652
+Author: James Slagle <jslagle@redhat.com>
+Date:   Mon Jan 27 13:03:41 2014 -0500
+
+    Rename to instack
+
+commit 7bcf0e2ea9486372d7d56f3fee559292dffc2af9
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Sep 27 07:48:39 2013 -0400
+
+    Specify full path to sudo
+
+commit f2be320c76a16b76b2921d97a3604c2b91cc671c
+Merge: 89bcb47 ebf2c7a
+Author: James Slagle <james.slagle@gmail.com>
+Date:   Fri Sep 27 04:29:47 2013 -0700
+
+    Merge pull request #1 from umago/master
+    
+    Fix adding to PATH
+
+commit ebf2c7a43d7f55abf316e68421667500754cb026
+Author: Lucas Alvares Gomes <lucasagomes@gmail.com>
+Date:   Thu Sep 26 16:20:25 2013 +0100
+
+    Fix adding to PATH
+    
+    Test if the PATH variable exists before manipulating it.
+
+commit 89bcb47abaea65073ac9864b8c4f6b37f08b3a2c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Sep 26 17:31:58 2013 -0400
+
+    Revert "Check for existence of path first"
+    
+    Didn't mean to push this to master (yet).
+    
+    This reverts commit 5b0222143ce57c775c4efc9db417d29a86c2fad0.
+
+commit 5b0222143ce57c775c4efc9db417d29a86c2fad0
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Sep 26 16:20:00 2013 -0400
+
+    Check for existence of path first
+
+commit 0207d15c467a4e8f976356c9914b44d23d902e5c
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Sep 13 08:48:58 2013 -0400
+
+    use symlink, not hard link
+
+commit 7e34cdb9853a88b7879874f70a5af12b94f583b5
+Author: James Slagle <jslagle@redhat.com>
+Date:   Fri Sep 13 08:17:50 2013 -0400
+
+    expose /tmp/in_target.d as a symlink to TMP_HOOKS_PATH
+
+commit 0e8a8fb2d0695da5bcf338e5ca0c1619781b5cfd
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Aug 20 09:51:22 2013 -0400
+
+    Make it such that the prompt shows up in case output is being redirected via tee
+
+commit 9b36e603f509ab3c4985c820aab04219cce0683d
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Aug 20 08:09:50 2013 -0400
+
+    Add an element that errors for testing
+
+commit ae5a6a47a31271eb96c7e0bccca7bcb485c4d128
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Aug 20 08:04:12 2013 -0400
+
+    Add interactive option
+
+commit 3937dfd0f52035b3f28f016a7855a0d3430ac9c8
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Aug 20 07:54:47 2013 -0400
+
+    Add debug option and update logging
+
+commit b866b47e1f9e663868543d77d2ea0d715de2bd8f
+Author: James Slagle <jslagle@redhat.com>
+Date:   Tue Aug 20 07:49:24 2013 -0400
+
+    Check return code and log error if a script fails
+
+commit 84bf91f612dfb1bdc941bd310ce3e8390434d037
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 21:30:58 2013 -0400
+
+    add license
+
+commit acffa33ffc8303763ad599fc1e8d37a77f2a3dd6
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 18:03:16 2013 -0400
+
+    add reminder about dib-run-parts
+
+commit 454d49ccfd3ea59173513f9f16be40292f7036dd
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 18:00:23 2013 -0400
+
+    More docs
+
+commit 78bb55f83ce17f62a58c97559b3e3735c64d25da
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 17:22:38 2013 -0400
+
+    run elements directly from tmp dir
+
+commit ee308802f296b3f86383f4fa341952d5c91dea6e
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 17:14:44 2013 -0400
+
+    doc updates
+
+commit 889487f914a1edeed576c665302df15514193ac3
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 15:55:32 2013 -0400
+
+    copy elements after loading deps
+
+commit 9ff2586516074e4de2d9c83bc6611c6fe40c83a5
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 15:49:18 2013 -0400
+
+    fix setting $ARCH
+
+commit 4055f5a87de261655275d974b3349b4534b14bb7
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 15:46:25 2013 -0400
+
+    set  in the env
+
+commit 33131adf03de5c0f9f2ad24382723143e5c47cc2
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 15:40:45 2013 -0400
+
+    setup environment; more test elements
+
+commit a86f368ad9abddeb4718efecb1a7c59f3a404343
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 15:29:39 2013 -0400
+
+    setup environment; more test elements
+
+commit 3e64c4aee1c2d9a4a0ec3c2f9f661fca246fa13d
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 13:16:51 2013 -0400
+
+    just send all output to stdout/stderr for now, easier to debug
+
+commit 273ac25c238400a353bbcd22a1a5f3dee6773634
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 12:15:15 2013 -0400
+
+    add hook argument
+
+commit b9411917bc5d3806e35d93a69a2f68fe429c1437
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:49:18 2013 -0400
+
+    Only load scripts that start with an int
+
+commit deaef2ab0f348b28da02618b120beb393395c251
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:39:20 2013 -0400
+
+    add dry run option
+
+commit 79d9e9366ce38e76d092fc2a3d48b36807c47144
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:32:32 2013 -0400
+
+    Only pass specified elements to expand_dependencies
+
+commit 68c34350f1a22f8005ecf294356ea6dc639b6190
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:30:55 2013 -0400
+
+    hook path needs to be absolute
+
+commit 98a5352ba9f1bdd2f84b56d8435c8a8bbf9c4896
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:30:23 2013 -0400
+
+    hook path needs to be absolute
+
+commit e0852a0c0ba512d506875e4a5bd47b8ea9b7273f
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:25:08 2013 -0400
+
+    Add code
+
+commit 10c5ec8dd05be0bbfc8ad43adb07fd938fe3cbdc
+Author: James Slagle <jslagle@redhat.com>
+Date:   Thu Aug 8 09:24:16 2013 -0400
+
+    Initial commit
+
+commit 75e30470ef3ba986b663f5f854efb01f8d2ddcad
+Author: James Slagle <james.slagle@gmail.com>
+Date:   Wed Aug 7 04:48:23 2013 -0700
+
+    Initial commit
