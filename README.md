@@ -8,11 +8,11 @@ diskimage-builder applies the element to an image build.
 [1] https://github.com/stackforge/diskimage-builder
 
 An undercloud based installer that uses instack is at:
-https://github.com/slagle/instack-undercloud
+https://github.com/agroup/instack-undercloud
 
 Use the command line arguments for fine grained control over which elements to
 apply, or drive instack via a declarative style json file (see
-https://github.com/slagle/instack-undercloud/blob/master/json-files/fedora-20-undercloud.json
+https://github.com/agroup/instack-undercloud/blob/master/json-files/fedora-20-undercloud.json
 for an example).
 
 <pre><code>
@@ -49,3 +49,34 @@ optional arguments:
   --no-cleanup          Do not cleanup tmp directories
 </code></pre>
 
+Setup
+-----
+
+1. git clone this repository
+
+        git clone https://github.com/agroup/instack
+
+1. pip install the cloned instack
+
+        pushd instack
+        sudo pip install -e .
+        popd
+        
+1. pip install diskimage-builder and tripleo-image-elements
+
+        sudo pip install diskimage-builder tripleo-image-elements
+        
+
+Example Uses
+------------
+
+On Fedora, apply the keystone element:
+
+<pre><code>
+sudo -E instack \
+    -p tripleo-image-elements/elements/ diskimage-builder/elements/ \
+    -e fedora base keystone \
+    -k extra-data pre-install install post-install \
+    -b 15-remove-grub 10-cloud-init
+</code></pre>
+        
