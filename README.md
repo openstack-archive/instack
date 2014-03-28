@@ -73,25 +73,29 @@ Setup
 
 1. pip install the cloned instack
 
-        pushd instack
-        sudo pip install -e .
-        popd
+        pushd instack && sudo pip install -e . && popd
         
 1. pip install diskimage-builder and tripleo-image-elements
 
         sudo pip install diskimage-builder tripleo-image-elements
+If you so choose, you can use these from their git repositories instead:
+
+        git clone https://git.openstack.org/openstack/diskimage-builder
+        git clone https://git.openstack.org/openstack/tripleo-image-elements
+        pushd diskimage-builder && sudo pip install . && popd
+        pushd tripleo-image-elements && sudo pip install . && popd
         
 
 Example Uses
 ------------
 
-On Fedora, apply the keystone element:
+On Fedora, apply the keystone and mariadb element:
 
 <pre><code>
 sudo -E instack \
     -p /usr/share/tripleo-image-elements /usr/share/diskimage-builder/elements \
-    -e fedora base keystone \
+    -e fedora base keystone mariadb \
     -k extra-data pre-install install post-install \
     -b 15-remove-grub 10-cloud-init
 </code></pre>
-        
+
