@@ -20,7 +20,7 @@ Usage
 
 Use the command line arguments for fine grained control over which elements to
 apply, or drive instack via a declarative style json file (see
-https://github.com/agroup/instack-undercloud/blob/master/json-files/fedora-20-undercloud.json
+https://github.com/agroup/instack-undercloud/blob/master/json-files/fedora-20-undercloud-packages.json
 for an example).
 
 <pre><code>
