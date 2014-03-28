@@ -60,6 +60,8 @@ optional arguments:
 Setup
 -----
 
+1. Make sure you have pip and git installed. If using your distro's pip, make you have at least pip version 1.5. There's a bug in older versions that causes some files to not be installed +x, which is a requirement for element hook scripts. To use upstream pip, see: http://www.pip-installer.org/en/latest/installing.html
+
 1. git clone this repository
 
         git clone https://github.com/agroup/instack
