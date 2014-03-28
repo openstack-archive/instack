@@ -19,6 +19,7 @@ import json
 import logging
 import os
 import platform
+import shutil
 import sys
 import tempfile
 
@@ -88,6 +89,8 @@ def set_environment():
     else:
         os.environ['ARCH'] = 'i386'
 
+def cleanup():
+    shutil.rmtree(os.environ['TMP_MOUNT_PATH'])
 
 def main(argv=sys.argv):
     args = load_args(argv[1:])
@@ -101,23 +104,26 @@ def main(argv=sys.argv):
             level=logging.INFO,
             format="%(levelname)s:%(asctime)s -- %(message)s")
 
-    if args.json_file:
-        json_list = json.loads(open(args.json_file).read())
-        if not isinstance(json_list, list):
-            print "json file should be a list"
-            sys.exit(1)
+    try:
+        if args.json_file:
+            json_list = json.loads(open(args.json_file).read())
+            if not isinstance(json_list, list):
+                print "json file should be a list"
+                sys.exit(1)
 
-        for run in json_list:
-            em = runner.ElementRunner(
-                    run['element'], run['hook'], args.element_path, 
-                    run.get('blacklist', []), run.get('exclude-element', []),
-                    args.dry_run, args.interactive, args.no_cleanup)
+            for run in json_list:
+                em = runner.ElementRunner(
+                        run['element'], run['hook'], args.element_path, 
+                        run.get('blacklist', []), run.get('exclude-element', []),
+                        args.dry_run, args.interactive, args.no_cleanup)
+                em.run()
+        else:
+            em = runner.ElementRunner(args.element, args.hook, args.element_path,
+                                      args.blacklist, args.exclude_element,
+                                      args.dry_run, args.interactive, args.no_cleanup)
             em.run()
-    else:
-        em = runner.ElementRunner(args.element, args.hook, args.element_path,
-                                  args.blacklist, args.exclude_element,
-                                  args.dry_run, args.interactive, args.no_cleanup)
-        em.run()
+    finally:
+        cleanup()
 
 
 if __name__ == '__main__':
