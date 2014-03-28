@@ -23,6 +23,11 @@ apply, or drive instack via a declarative style json file (see
 https://github.com/agroup/instack-undercloud/blob/master/json-files/fedora-20-undercloud-packages.json
 for an example).
 
+Be aware that most elements are not idempotent. Subsequent runs of instack with the same set of elements
+will often fail due to things files and directories already existing. One way around this is to write a clean up
+element for your environment that cleans up before a run early in pre-install.d, and then always
+include that element when you run instack.
+
 <pre><code>
 usage: instack [-h] [-e [ELEMENT [ELEMENT ...]]]
                [-p ELEMENT_PATH [ELEMENT_PATH ...]] [-k [HOOK [HOOK ...]]]
