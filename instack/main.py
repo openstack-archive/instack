@@ -69,6 +69,9 @@ def load_args(argv):
         '-l', '--logfile', action='store',
         default=os.path.join(os.path.expanduser('~'), '.instack/instack.log'),
         help=("Logfile to log all actions"))
+    parser.add_argument(
+        '--os-refresh-config', action='store_true',
+        help=("Run os-refresh-config at the end."))
 
     args = parser.parse_args(argv)
 
@@ -139,11 +142,19 @@ def main(argv=sys.argv):
                     args.dry_run, args.interactive,
                     args.no_cleanup)
             em.run()
+
+        if args.os_refresh_config:
+            LOG.info("Running os-refresh-config")
+            runner.call(["os-refresh-config"])
+            if rc != 0:
+                raise Exception("os-refresh-config FAILED.")
+
     except Exception, e:
         LOG.error(e.message)
         sys.exit(1)
     finally:
         cleanup(tmp_dir)
+
 
     LOG.info("Ending run of instack.")
 
