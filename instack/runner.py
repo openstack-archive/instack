@@ -27,6 +27,8 @@ from diskimage_builder import element_dependencies
 from instack import element
 
 
+LOG = logging.getLogger()
+
 class ElementRunner(object):
 
     def __init__(self, elements, hooks, element_paths=None, blacklist=None,
@@ -62,8 +64,8 @@ class ElementRunner(object):
         if self.element_paths is None:
             raise Exception("No element paths specified")
 
-        logging.info('manager initialized with elements path: %s' %
-                     self.element_paths)
+        LOG.info('Initialized with elements path: %s' %
+                     ' '.join(list(self.element_paths)))
 
         self.load_elements()
         self.load_dependencies()
@@ -73,7 +75,6 @@ class ElementRunner(object):
     def run(self):
         """Apply the elements by running each specified hook."""
         for hook in self.hooks:
-            logging.info("running hook: %s" % hook)
             self.run_hook(hook)
 
         self.cleanup()
@@ -132,13 +133,14 @@ class ElementRunner(object):
         all_elements = element_dependencies.expand_dependencies(
             self.elements, ':'.join(self.element_paths))
         self.elements = all_elements
-        logging.info("List of all elements: %s" % self.elements)
+        LOG.info("List of all elements and dependencies: %s" % 
+                    ' '.join(list(self.elements)))
 
     def process_exclude_elements(self):
         """Remove any elements that have been specified as excluded."""
         for elem in self.exclude_elements:
             if elem in self.elements:
-                logging.info("Excluding element %s" % elem)
+                LOG.info("Excluding element %s" % elem)
                 self.elements.remove(elem)
 
     def run_hook(self, hook):
@@ -147,48 +149,50 @@ class ElementRunner(object):
         :param hook: name of hook to run
         :type hook: str
         """
+        LOG.info("  Running hook %s" % hook)
+
         hook_dir = os.path.join(self.tmp_hook_dir, '%s.d' % hook)
         if not os.path.exists(hook_dir):
-            logging.info("Skipping hook %s, the hook directory doesn't "
+            LOG.info("    Skipping hook %s, the hook directory doesn't "
                          "exist at %s" % (hook, hook_dir))
             return
 
         for blacklisted_script in self.blacklist:
             if blacklisted_script in os.listdir(hook_dir):
-                logging.info("Blacklisting %s" % blacklisted_script)
+                LOG.debug("    Blacklisting %s" % blacklisted_script)
                 os.unlink(os.path.join(hook_dir, blacklisted_script))
 
         command = ['dib-run-parts', hook_dir]
         if self.dry_run:
-            logging.info("Dry Run specified, not running: %s" % command)
+            LOG.info("    Dry Run specified, not running hook")
         else:
             rc = call(command, env=os.environ)
-
             if rc != 0:
-                logging.error("dib-run-parts hook failed: %s" % hook_dir)
-                if self.interactive:
-                    logging.error("Continue? (y/n): ")
-                    sys.stdout.flush()
-                    entry = raw_input("")
-                    if entry.lower() == 'y':
-                        logging.info("continuing on user command.")
-                        return
-
-                logging.error("exiting after failure.")
-                sys.exit(rc)
+                LOG.error("    Hook FAILED.")
+                raise Exception("Failed running command %s" % command)
 
 
 def call(command, **kwargs):
     """Call out to run a command via subprocess."""
 
-    logging.info('executing command: %s' % command)
+    LOG.debug('    executing command: %s' % command)
 
     p = subprocess.Popen(command,
-                         stdout=sys.stdout,
-                         stderr=sys.stderr,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE,
                          **kwargs)
 
-    rc = p.wait()
-    logging.info('  exited with code: %s' % rc)
+    (stdoutdata, stderrdata) = p.communicate()
 
-    return rc
+    for output in stdoutdata, stderrdata:
+        for line in output.split('\n'):
+            LOG.debug("    %s" % line)
+
+    LOG.debug('    exited with code: %s' % p.returncode)
+
+    if p.returncode != 0:
+        for output in stdoutdata, stderrdata:
+            for line in output.split('\n'):
+                LOG.debug("    %s" % line)
+
+    return p.returncode

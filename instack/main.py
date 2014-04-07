@@ -26,6 +26,8 @@ import tempfile
 from instack import runner
 
 
+LOG = logging.getLogger()
+
 def load_args(argv):
     parser = argparse.ArgumentParser(
         description="Execute diskimage-builder elements on the current "
@@ -63,6 +65,10 @@ def load_args(argv):
     parser.add_argument(
         '--no-cleanup', action='store_true',
         help=("Do not cleanup tmp directories"))
+    parser.add_argument(
+        '-l', '--logfile', action='store',
+        default=os.path.join(os.path.expanduser('~'), '.instack/instack.log'),
+        help=("Logfile to log all actions"))
 
     args = parser.parse_args(argv)
 
@@ -94,38 +100,52 @@ def cleanup(tmp_dir):
 
 def main(argv=sys.argv):
     args = load_args(argv[1:])
+
     tmp_dir = tempfile.mkdtemp(prefix='instack.')
     set_environment(tmp_dir)
-    if args.debug:
-        logging.basicConfig(
-            level=logging.DEBUG,
-            format="%(levelname)s:%(asctime)s -- %(message)s")
-    else:
-        logging.basicConfig(
-            level=logging.INFO,
-            format="%(levelname)s:%(asctime)s -- %(message)s")
+
+    formatter = logging.Formatter("%(levelname)s: %(asctime)s -- %(message)s")
+    stream_handler = logging.StreamHandler()
+    stream_handler.setFormatter(formatter)
+    stream_handler.setLevel(logging.INFO)
+    file_handler = logging.FileHandler(args.logfile)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.DEBUG)
+    LOG.setLevel(logging.DEBUG)
+    LOG.addHandler(stream_handler)
+    LOG.addHandler(file_handler)
+
+    LOG.info("Starting run of instack")
 
     try:
         if args.json_file:
+            LOG.info("Using json file: %s" % args.json_file)
             json_list = json.loads(open(args.json_file).read())
             if not isinstance(json_list, list):
-                print "json file should be a list"
-                sys.exit(1)
+                raise Exception("json file should be a list structure")
 
             for run in json_list:
+                if "name" in run:
+                    LOG.info("Running %s" % run["name"])
                 em = runner.ElementRunner(
                         run['element'], run['hook'], args.element_path, 
                         run.get('blacklist', []), run.get('exclude-element', []),
                         args.dry_run, args.interactive, args.no_cleanup)
                 em.run()
         else:
-            em = runner.ElementRunner(args.element, args.hook, args.element_path,
-                                      args.blacklist, args.exclude_element,
-                                      args.dry_run, args.interactive, args.no_cleanup)
+            em = runner.ElementRunner(
+                    args.element, args.hook, args.element_path,
+                    args.blacklist, args.exclude_element,
+                    args.dry_run, args.interactive,
+                    args.no_cleanup)
             em.run()
+    except Exception, e:
+        LOG.error(e.message)
+        sys.exit(1)
     finally:
         cleanup(tmp_dir)
 
+    LOG.info("Ending run of instack.")
 
 if __name__ == '__main__':
     main()

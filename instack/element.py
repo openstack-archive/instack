@@ -28,8 +28,6 @@ class Element(object):
         :param directory: The directory that defines the element.
         :type directory str.
         """
-        logging.debug('initializing element: %s' % directory)
-
         if not os.access(directory, os.R_OK):
             raise Exception
 
@@ -47,12 +45,9 @@ class Element(object):
             hook = f[:-2]
             hook_path = os.path.abspath(os.path.join(self.directory, f))
 
-            logging.debug('  found hook: %s' % hook)
-
             for script in os.listdir(hook_path):
                 if script[0:1] not in string.digits:
                     continue
-                logging.debug('    found script: %s' % script)
                 self.hooks.setdefault(
                     hook, []).append(os.path.join(hook_path, script))
 
