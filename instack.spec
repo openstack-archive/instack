@@ -7,8 +7,7 @@ Summary:		OpenStack installation tool for diskimage-builder style elements
 Group:			Development/Languages
 License:		ASL 2.0
 URL:			https://github.com/agroup/instack
-# Source0:		https://github.com/agroup/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
-Source0:		instack-0.0.3.6.ge72276e.tar.gz
+Source0:		https://github.com/agroup/%{name}/releases/download/%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:		noarch
 BuildRequires:		python-setuptools
