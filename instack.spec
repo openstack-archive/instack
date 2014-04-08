@@ -41,6 +41,9 @@ openstack-tripleo-image-elements.
 %{python2_sitelib}/*.egg-info
 
 %changelog
+* Tue Apr 08 2014 James Slagle <jslagle@redhat.com> 0.0.4-2
+- Build with tito
+
 * Tue Apr 08 2014 James Slagle <jslagle@redhat.com> 0.0.4-1
 - Bump to 0.0.4
 
