@@ -111,12 +111,8 @@ def main(argv=sys.argv):
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(formatter)
     stream_handler.setLevel(logging.INFO)
-    file_handler = logging.FileHandler(args.logfile)
-    file_handler.setFormatter(formatter)
-    file_handler.setLevel(logging.DEBUG)
     LOG.setLevel(logging.DEBUG)
     LOG.addHandler(stream_handler)
-    LOG.addHandler(file_handler)
 
     LOG.info("Starting run of instack")
 
@@ -145,7 +141,7 @@ def main(argv=sys.argv):
 
         if args.os_refresh_config:
             LOG.info("Running os-refresh-config")
-            runner.call(["os-refresh-config"])
+            rc = runner.call(["os-refresh-config"])
             if rc != 0:
                 raise Exception("os-refresh-config FAILED.")
 

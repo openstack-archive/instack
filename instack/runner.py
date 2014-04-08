@@ -177,22 +177,12 @@ def call(command, **kwargs):
 
     LOG.debug('    executing command: %s' % command)
 
-    p = subprocess.Popen(command,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE,
+    LOG.info('############### Begin stdout/stderr logging ###############')
+    rc = subprocess.call(command,
+                         stdout=sys.stdout,
+                         stderr=sys.stderr,
                          **kwargs)
+    LOG.info('############### End stdout/stderr logging ###############')
 
-    (stdoutdata, stderrdata) = p.communicate()
-
-    for output in stdoutdata, stderrdata:
-        for line in output.split('\n'):
-            LOG.debug("    %s" % line)
-
-    LOG.debug('    exited with code: %s' % p.returncode)
-
-    if p.returncode != 0:
-        for output in stdoutdata, stderrdata:
-            for line in output.split('\n'):
-                LOG.debug("    %s" % line)
-
-    return p.returncode
+    LOG.debug('    exited with code: %s' % rc)
+    return rc
