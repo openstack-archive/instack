@@ -36,3 +36,5 @@ nosetests.xml
 .pydevproject
 
 instack.answers
+ChangeLog
+Authors
