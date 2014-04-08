@@ -142,7 +142,6 @@ def main(argv=sys.argv):
     finally:
         cleanup(tmp_dir)
 
-
     LOG.info("Ending run of instack.")
 
 if __name__ == '__main__':
