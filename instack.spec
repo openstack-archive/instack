@@ -1,7 +1,7 @@
 %global repo_name instack
 
 Name:			instack
-Version:		0.0.3.6.ge72276e
+Version:		0.0.3
 Release:		2%{?dist}
 Summary:		OpenStack installation tool for diskimage-builder style elements
 Group:			Development/Languages
