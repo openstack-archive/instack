@@ -96,6 +96,6 @@ sudo -E instack \
     -p /usr/share/tripleo-image-elements /usr/share/diskimage-builder/elements \
     -e fedora base keystone mariadb \
     -k extra-data pre-install install post-install \
-    -b 15-remove-grub 10-cloud-init
+    -b 15-remove-grub 10-cloud-init 05-fstab-rootfs-label
 </code></pre>
 
