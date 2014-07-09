@@ -20,8 +20,10 @@ import logging
 import os
 import platform
 import shutil
+import subprocess
 import sys
 import tempfile
+import traceback
 
 from instack import runner
 
@@ -89,11 +91,25 @@ def set_environment(tmp_dir):
     os.environ['DIB_INIT_SYSTEM'] = 'systemd'
     os.environ['IMAGE_NAME'] = 'instack'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
-    os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
+
+    if os.path.exists('/usr/share/diskimage-builder/lib'):
+        os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
+    elif os.path.exists('diskimage-builder/lib'):
+        os.environ['_LIB'] = 'diskimage-builder/lib'
+    else:
+        raise Exception("Can't detect diskimage-builder lib directory.")
+
+    os.environ['TARGET_ROOT'] = '/'
     if platform.processor() == 'x86_64':
         os.environ['ARCH'] = 'amd64'
     else:
         os.environ['ARCH'] = 'i386'
+
+    os.environ['DIB_ENV'] = \
+        subprocess.check_output(['export', '|', 'grep', '\' DIB_.*=\''],
+                                shell=True)
+
+    os.environ['DIB_ARGS'] = str(sys.argv)
 
 def cleanup(tmp_dir):
     shutil.rmtree(tmp_dir)
@@ -102,7 +118,6 @@ def main(argv=sys.argv):
     args = load_args(argv[1:])
 
     tmp_dir = tempfile.mkdtemp(prefix='instack.')
-    set_environment(tmp_dir)
 
     formatter = logging.Formatter("%(levelname)s: %(asctime)s -- %(message)s")
     stream_handler = logging.StreamHandler()
@@ -112,6 +127,8 @@ def main(argv=sys.argv):
     LOG.addHandler(stream_handler)
 
     LOG.info("Starting run of instack")
+
+    set_environment(tmp_dir)
 
     try:
         if args.json_file:
@@ -138,6 +155,7 @@ def main(argv=sys.argv):
 
     except Exception, e:
         LOG.error(e.message)
+        LOG.error(traceback.print_tb(sys.exc_info()[2]))
         sys.exit(1)
     finally:
         cleanup(tmp_dir)

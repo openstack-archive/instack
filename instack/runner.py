@@ -133,6 +133,7 @@ class ElementRunner(object):
         all_elements = element_dependencies.expand_dependencies(
             self.elements, ':'.join(self.element_paths))
         self.elements = all_elements
+        os.environ['IMAGE_ELEMENT'] = ' '.join([x for x in self.elements])
         LOG.info("List of all elements and dependencies: %s" % 
                     ' '.join(list(self.elements)))
 
