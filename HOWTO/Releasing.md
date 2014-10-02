@@ -23,4 +23,4 @@ To do a new build of instack you need to:
 
 1. Upload the tgz created earlier to the release.
 
-1. Update the specfile Version and rebuild.
+1. Update the specfile Version in dist-git and rebuild.
