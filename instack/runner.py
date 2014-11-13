@@ -29,6 +29,7 @@ from instack import element
 
 LOG = logging.getLogger()
 
+
 class ElementRunner(object):
 
     def __init__(self, elements, hooks, element_paths=None, blacklist=None,
@@ -65,7 +66,7 @@ class ElementRunner(object):
             raise Exception("No element paths specified")
 
         LOG.info('Initialized with elements path: %s' %
-                     ' '.join(list(self.element_paths)))
+                 ' '.join(list(self.element_paths)))
 
         self.load_elements()
         self.load_dependencies()
@@ -134,8 +135,8 @@ class ElementRunner(object):
             self.elements, ':'.join(self.element_paths))
         self.elements = all_elements
         os.environ['IMAGE_ELEMENT'] = ' '.join([x for x in self.elements])
-        LOG.info("List of all elements and dependencies: %s" % 
-                    ' '.join(list(self.elements)))
+        LOG.info("List of all elements and dependencies: %s" %
+                 ' '.join(list(self.elements)))
 
     def process_exclude_elements(self):
         """Remove any elements that have been specified as excluded."""
@@ -155,7 +156,7 @@ class ElementRunner(object):
         hook_dir = os.path.join(self.tmp_hook_dir, '%s.d' % hook)
         if not os.path.exists(hook_dir):
             LOG.info("    Skipping hook %s, the hook directory doesn't "
-                         "exist at %s" % (hook, hook_dir))
+                     "exist at %s" % (hook, hook_dir))
             return
 
         for blacklisted_script in self.blacklist:

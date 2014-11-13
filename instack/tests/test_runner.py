@@ -14,9 +14,10 @@
 # under the License.
 
 
-import mock
 import os
 import tempfile
+
+import mock
 import testtools
 
 from instack import runner
@@ -93,7 +94,7 @@ class TestRunner(testtools.TestCase):
         self.assertTrue('repo' in self.runner.loaded_elements)
 
         self.assertRaises(Exception, self.runner.process_path,
-                          '/tmp/non/existant/path')
+                          '/tmp/non/existant/path')  # noqa
 
     @mock.patch('instack.runner.call',
                 return_value=0)
@@ -106,7 +107,7 @@ class TestRunner(testtools.TestCase):
 
         self.assertEqual(mock_call.call_count, 1)
         self.assertEqual(
-            ['dib-run-parts', 
+            ['dib-run-parts',
              os.path.join(self.runner.tmp_hook_dir, 'install.d')],
             mock_call.call_args_list[0][0][0])
 
