@@ -93,6 +93,7 @@ def set_environment(tmp_dir):
         '%s/.cache/image-create' % os.environ['HOME']
     os.environ['IMAGE_NAME'] = 'instack'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
+    os.environ.setdefault('DIB_DEFAULT_INSTALLTYPE', 'package')
 
     if os.path.exists('/usr/share/diskimage-builder/lib'):
         os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
