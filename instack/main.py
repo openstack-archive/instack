@@ -12,7 +12,7 @@
 # WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations
 # under the License.
-
+from __future__ import print_function
 
 import argparse
 import json
@@ -29,6 +29,7 @@ from instack import runner
 
 
 LOG = logging.getLogger()
+
 
 def load_args(argv):
     parser = argparse.ArgumentParser(
@@ -75,8 +76,8 @@ def load_args(argv):
     args = parser.parse_args(argv)
 
     if args.json_file and (args.element or args.hook or args.exclude_element):
-        print "--json-file not compatible with --element, --hook,"
-        print "--exclude-element, or --blacklist"
+        print("--json-file not compatible with --element, --hook,")
+        print("--exclude-element, or --blacklist")
         sys.exit(1)
 
     return args
@@ -89,8 +90,8 @@ def set_environment(tmp_dir):
     os.symlink('/', os.environ['TMP_MOUNT_PATH'])
     os.environ['DIB_OFFLINE'] = ''
     os.environ['DIB_INIT_SYSTEM'] = 'systemd'
-    os.environ['DIB_IMAGE_CACHE'] = \
-        '%s/.cache/image-create' % os.environ['HOME']
+    os.environ['DIB_IMAGE_CACHE'] = (
+        '%s/.cache/image-create' % os.environ['HOME'])
     os.environ['IMAGE_NAME'] = 'instack'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
     os.environ.setdefault('DIB_DEFAULT_INSTALLTYPE', 'package')
@@ -108,14 +109,16 @@ def set_environment(tmp_dir):
     else:
         os.environ['ARCH'] = 'i386'
 
-    os.environ['DIB_ENV'] = \
+    os.environ['DIB_ENV'] = (
         subprocess.check_output(['export', '|', 'grep', '\' DIB_.*=\''],
-                                shell=True)
+                                shell=True))
 
     os.environ['DIB_ARGS'] = str(sys.argv)
 
+
 def cleanup(tmp_dir):
     shutil.rmtree(tmp_dir)
+
 
 def main(argv=sys.argv):
     args = load_args(argv[1:])
@@ -144,19 +147,19 @@ def main(argv=sys.argv):
                 if "name" in run:
                     LOG.info("Running %s" % run["name"])
                 em = runner.ElementRunner(
-                        run['element'], run['hook'], args.element_path, 
-                        run.get('blacklist', []), run.get('exclude-element', []),
-                        args.dry_run, args.interactive, args.no_cleanup)
+                    run['element'], run['hook'], args.element_path,
+                    run.get('blacklist', []), run.get('exclude-element', []),
+                    args.dry_run, args.interactive, args.no_cleanup)
                 em.run()
         else:
             em = runner.ElementRunner(
-                    args.element, args.hook, args.element_path,
-                    args.blacklist, args.exclude_element,
-                    args.dry_run, args.interactive,
-                    args.no_cleanup)
+                args.element, args.hook, args.element_path,
+                args.blacklist, args.exclude_element,
+                args.dry_run, args.interactive,
+                args.no_cleanup)
             em.run()
 
-    except Exception, e:
+    except Exception as e:
         LOG.error(e.message)
         LOG.error(traceback.print_tb(sys.exc_info()[2]))
         sys.exit(1)
