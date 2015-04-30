@@ -124,6 +124,11 @@ def main(argv=sys.argv):
     args = load_args(argv[1:])
 
     tmp_dir = tempfile.mkdtemp(prefix='instack.')
+    try:
+        os.makedirs(os.path.dirname(args.logfile))
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
 
     formatter = logging.Formatter("%(levelname)s: %(asctime)s -- %(message)s")
     stream_handler = logging.StreamHandler()
@@ -131,6 +136,10 @@ def main(argv=sys.argv):
     stream_handler.setLevel(logging.INFO)
     LOG.setLevel(logging.DEBUG)
     LOG.addHandler(stream_handler)
+    file_handler = logging.FileHandler(args.logfile)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+    LOG.addHandler(file_handler)
 
     LOG.info("Starting run of instack")
 
