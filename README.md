@@ -13,14 +13,14 @@ knowledge of the elements within diskimage-builder and tripleo-image-elements.
 
 An example of higher level tooling that uses instack to install a TripleO style
 undercloud is at:
-https://github.com/agroup/instack-undercloud
+https://github.com/rdo-management/instack-undercloud
 
 Usage
 -----
 
 Use the command line arguments for fine grained control over which elements to
 apply, or drive instack via a declarative style json file (see
-https://github.com/agroup/instack-undercloud/blob/master/json-files/fedora-20-undercloud-packages.json
+https://github.com/rdo-management/instack-undercloud/blob/master/json-files/fedora-20-undercloud-packages.json
 for an example).
 
 Be aware that most elements are not idempotent. Subsequent runs of instack with the same set of elements
@@ -69,12 +69,12 @@ Setup
 
 1. git clone this repository
 
-        git clone https://github.com/agroup/instack
+        git clone https://github.com/rdo-management/instack
 
 1. pip install the cloned instack
 
         pushd instack && sudo pip install -e . && popd
-        
+
 1. pip install diskimage-builder and tripleo-image-elements
 
         sudo pip install diskimage-builder tripleo-image-elements
@@ -84,7 +84,6 @@ If you so choose, you can use these from their git repositories instead:
         git clone https://git.openstack.org/openstack/tripleo-image-elements
         pushd diskimage-builder && sudo pip install . && popd
         pushd tripleo-image-elements && sudo pip install . && popd
-        
 
 Example Uses
 ------------

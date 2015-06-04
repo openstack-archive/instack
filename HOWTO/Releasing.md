@@ -15,7 +15,7 @@ To do a new build of instack you need to:
 
         python setup.py sdist
 
-1. Go to github for instack, https://github.com/agroup/instack/releases/
+1. Go to github for instack, https://github.com/rdo-management/instack/releases/
 
 1. Click Draft a new release
 
