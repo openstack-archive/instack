@@ -32,7 +32,7 @@ class TestRunner(testtools.TestCase):
         test_elements = os.path.join(cwd, 'elements')
         self.element_paths = [test_elements]
 
-        self.runner = runner.ElementRunner(['dep2', 'echo'], [],
+        self.runner = runner.ElementRunner(['dep2', 'echo', 'os'], [],
                                            self.element_paths)
         tmp_dir = tempfile.mkdtemp()
         self.runner.tmp_hook_dir = tmp_dir
@@ -66,7 +66,7 @@ class TestRunner(testtools.TestCase):
         self.runner.copy_elements()
         self.runner.load_dependencies()
 
-        self.assertEqual(len(self.runner.elements), 3)
+        self.assertEqual(len(self.runner.elements), 4)
         self.assertTrue('dep1' in self.runner.elements)
 
     def test_process_exclude_elements(self):
@@ -76,7 +76,7 @@ class TestRunner(testtools.TestCase):
         self.runner.load_dependencies()
         self.runner.process_exclude_elements()
 
-        self.assertEqual(len(self.runner.elements), 2)
+        self.assertEqual(len(self.runner.elements), 3)
         self.assertFalse('dep1' in self.runner.elements)
 
     def test_process_path(self):
@@ -85,7 +85,7 @@ class TestRunner(testtools.TestCase):
         self.runner.loaded_elements = {}
         self.runner.process_path(test_elements)
 
-        self.assertEqual(len(self.runner.loaded_elements), 6)
+        self.assertEqual(len(self.runner.loaded_elements), 7)
         self.assertTrue('dep1' in self.runner.loaded_elements)
         self.assertTrue('dep2' in self.runner.loaded_elements)
         self.assertTrue('echo' in self.runner.loaded_elements)
