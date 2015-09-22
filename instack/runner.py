@@ -164,11 +164,12 @@ class ElementRunner(object):
                 LOG.debug("    Blacklisting %s" % blacklisted_script)
                 os.unlink(os.path.join(hook_dir, blacklisted_script))
 
-        command = ['dib-run-parts', hook_dir]
+        command = "eval $(disk-image-create -d) && " + \
+                  "dib-run-parts %s" % (hook_dir)
         if self.dry_run:
             LOG.info("    Dry Run specified, not running hook")
         else:
-            rc = call(command, env=os.environ)
+            rc = call(command, env=os.environ, shell=True)
             if rc != 0:
                 LOG.error("    Hook FAILED.")
                 raise Exception("Failed running command %s" % command)
