@@ -107,8 +107,8 @@ class TestRunner(testtools.TestCase):
 
         self.assertEqual(mock_call.call_count, 1)
         self.assertEqual(
-            ['dib-run-parts',
-             os.path.join(self.runner.tmp_hook_dir, 'install.d')],
+            'eval $(disk-image-create -d) && dib-run-parts %s' %
+            (os.path.join(self.runner.tmp_hook_dir, 'install.d')),
             mock_call.call_args_list[0][0][0])
 
     @mock.patch('instack.runner.call',
