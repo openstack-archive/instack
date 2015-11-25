@@ -124,8 +124,6 @@ class ElementRunner(object):
         for elem in os.listdir(path):
             if not os.path.isdir(os.path.join(path, elem)):
                 continue
-            if elem in self.loaded_elements:
-                raise Exception("Element %s already loaded." % elem)
             self.loaded_elements[elem] = element.Element(
                 os.path.join(path, elem))
 
