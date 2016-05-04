@@ -74,10 +74,14 @@ class TestRunner(testtools.TestCase):
 
         self.runner.copy_elements()
         self.runner.load_dependencies()
+        self.assertEqual(os.environ['IMAGE_ELEMENT'],
+                         'dep1 dep2 echo os')
         self.runner.process_exclude_elements()
 
         self.assertEqual(len(self.runner.elements), 3)
         self.assertFalse('dep1' in self.runner.elements)
+        self.assertEqual(os.environ['IMAGE_ELEMENT'],
+                         'dep2 echo os')
 
     def test_process_path(self):
         cwd = os.path.dirname(__file__)
