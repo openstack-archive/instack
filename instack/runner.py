@@ -132,7 +132,7 @@ class ElementRunner(object):
         all_elements = element_dependencies.expand_dependencies(
             self.elements, ':'.join(self.element_paths))
         self.elements = all_elements
-        os.environ['IMAGE_ELEMENT'] = ' '.join([x for x in self.elements])
+        os.environ['IMAGE_ELEMENT'] = ' '.join([x for x in sorted(self.elements)])
         LOG.info("List of all elements and dependencies: %s" %
                  ' '.join(list(self.elements)))
 
@@ -142,6 +142,10 @@ class ElementRunner(object):
             if elem in self.elements:
                 LOG.info("Excluding element %s" % elem)
                 self.elements.remove(elem)
+        # Need to redefine OS.environ['IMAGE_ELEMENT'] after removing excludes
+        os.environ['IMAGE_ELEMENT'] = ' '.join([x for x in sorted(self.elements)])
+        LOG.info("List of all elements and dependencies after excludes: %s" %
+                 ' '.join(list(self.elements)))
 
     def run_hook(self, hook):
         """Run a hook on the current system.
