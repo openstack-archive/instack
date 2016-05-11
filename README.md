@@ -20,7 +20,7 @@ Usage
 
 Use the command line arguments for fine grained control over which elements to
 apply, or drive instack via a declarative style json file (see
-https://github.com/rdo-management/instack-undercloud/blob/master/json-files/fedora-20-undercloud-packages.json
+https://github.com/openstack/instack-undercloud/blob/master/json-files/centos-7-undercloud-packages.json
 for an example).
 
 Be aware that most elements are not idempotent. Subsequent runs of instack with the same set of elements
