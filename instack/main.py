@@ -101,8 +101,6 @@ def set_environment(tmp_dir):
         os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
     elif os.path.exists('diskimage-builder/lib'):
         os.environ['_LIB'] = 'diskimage-builder/lib'
-    else:
-        raise Exception("Can't detect diskimage-builder lib directory.")
 
     os.environ['TARGET_ROOT'] = '/'
     if platform.processor() == 'x86_64':
