@@ -23,6 +23,7 @@ import sys
 import tempfile
 
 from diskimage_builder import element_dependencies
+import yaml
 
 from instack import element
 
@@ -128,9 +129,33 @@ class ElementRunner(object):
                 os.path.join(path, elem))
 
     def load_dependencies(self):
+        # to make it work with v2, check if find_all_elements method is working
+        try:
+            element_parameters = element_dependencies.find_all_elements(
+                self.element_paths)
+
+            # export yaml for element
+            output = {}
+            for local_element in self.elements:
+                output[local_element] = element_parameters[local_element].path
+            os.environ['IMAGE_ELEMENT_YAML'] = yaml.safe_dump(output)
+
+            # now export bash array
+            output = ''
+            for local_element in self.elements:
+                output += '[%s]=%s ' % (
+                    local_element,
+                    element_parameters[local_element].path)
+            print("function get_image_element_array {\n"
+                  "  echo \"%s\"\n"
+                  "};\n"
+                  "export -f get_image_element_array;" % output)
+        except Exception:
+            element_parameters = ':'.join(self.element_paths)
+
         """Load and add all element dependencies to self.elements."""
         all_elements = element_dependencies.expand_dependencies(
-            self.elements, ':'.join(self.element_paths))
+            self.elements, element_parameters)
         self.elements = all_elements
         os.environ['IMAGE_ELEMENT'] = ' '.join(
             [x for x in sorted(self.elements)])
