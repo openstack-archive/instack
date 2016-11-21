@@ -23,6 +23,7 @@ import sys
 import tempfile
 
 from diskimage_builder import element_dependencies
+import yaml
 
 from instack import element
 
