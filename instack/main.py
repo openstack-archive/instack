@@ -97,12 +97,19 @@ def set_environment(tmp_dir):
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
     os.environ.setdefault('DIB_DEFAULT_INSTALLTYPE', 'package')
 
-    if os.path.exists('/usr/share/diskimage-builder/lib'):
-        os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
-    elif os.path.exists('diskimage-builder/lib'):
-        os.environ['_LIB'] = 'diskimage-builder/lib'
-    else:
-        raise Exception("Can't detect diskimage-builder lib directory.")
+    # first try to get it with paths tooling from dib
+    try:
+        import diskimage_builder.paths
+        os.environ['_LIB'] = diskimage_builder.paths.get_path("lib")
+    except Exception as e:
+        # just for debug, print exception. To be removed
+        print(str(e))
+        if os.path.exists('/usr/share/diskimage-builder/lib'):
+            os.environ['_LIB'] = '/usr/share/diskimage-builder/lib'
+        elif os.path.exists('diskimage-builder/lib'):
+            os.environ['_LIB'] = 'diskimage-builder/lib'
+        else:
+            raise Exception("Can't detect diskimage-builder lib directory.")
 
     os.environ['TARGET_ROOT'] = '/'
     if platform.processor() == 'x86_64':
