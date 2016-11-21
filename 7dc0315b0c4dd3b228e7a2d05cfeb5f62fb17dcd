@@ -1,0 +1,10 @@
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+1: Alex Schultz <aschultz@redhat.com>
+Code-Review+1: venkatamahesh <Venkata.Kotha@infinite.com>
+Workflow+1: Juan Antonio Osorio Robles <jaosorior@redhat.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 21 Nov 2016 10:06:17 +0000
+Reviewed-on: https://review.openstack.org/398029
+Project: openstack/instack
+Branch: refs/heads/master
