@@ -67,7 +67,7 @@ class TestRunner(testtools.TestCase):
         self.runner.load_dependencies()
 
         self.assertEqual(len(self.runner.elements), 4)
-        self.assertTrue('dep1' in self.runner.elements)
+        self.assertIn('dep1', self.runner.elements)
 
     def test_process_exclude_elements(self):
         self.runner.exclude_elements = ['dep1']
@@ -90,12 +90,12 @@ class TestRunner(testtools.TestCase):
         self.runner.process_path(test_elements)
 
         self.assertEqual(len(self.runner.loaded_elements), 7)
-        self.assertTrue('dep1' in self.runner.loaded_elements)
-        self.assertTrue('dep2' in self.runner.loaded_elements)
-        self.assertTrue('echo' in self.runner.loaded_elements)
-        self.assertTrue('error' in self.runner.loaded_elements)
-        self.assertTrue('output' in self.runner.loaded_elements)
-        self.assertTrue('repo' in self.runner.loaded_elements)
+        self.assertIn('dep1', self.runner.loaded_elements)
+        self.assertIn('dep2', self.runner.loaded_elements)
+        self.assertIn('echo', self.runner.loaded_elements)
+        self.assertIn('error', self.runner.loaded_elements)
+        self.assertIn('output', self.runner.loaded_elements)
+        self.assertIn('repo', self.runner.loaded_elements)
 
         self.assertRaises(Exception, self.runner.process_path,
                           '/tmp/non/existant/path')  # noqa
