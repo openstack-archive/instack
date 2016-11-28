@@ -178,5 +178,6 @@ def main(argv=sys.argv):
 
     LOG.info("Ending run of instack.")
 
+
 if __name__ == '__main__':
     main()
