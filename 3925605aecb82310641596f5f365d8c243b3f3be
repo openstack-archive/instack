@@ -1,0 +1,9 @@
+Code-Review+2: Marios Andreou <marios@redhat.com>
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Workflow+1: James Slagle <jslagle@redhat.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 15 Dec 2016 12:45:53 +0000
+Reviewed-on: https://review.openstack.org/408456
+Project: openstack/instack
+Branch: refs/heads/master
