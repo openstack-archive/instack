@@ -66,7 +66,7 @@ class TestRunner(testtools.TestCase):
         self.runner.copy_elements()
         self.runner.load_dependencies()
 
-        self.assertEqual(len(self.runner.elements), 4)
+        self.assertEqual(4, len(self.runner.elements))
         self.assertIn('dep1', self.runner.elements)
 
     def test_process_exclude_elements(self):
@@ -74,14 +74,14 @@ class TestRunner(testtools.TestCase):
 
         self.runner.copy_elements()
         self.runner.load_dependencies()
-        self.assertEqual(os.environ['IMAGE_ELEMENT'],
-                         'dep1 dep2 echo os')
+        self.assertEqual('dep1 dep2 echo os',
+                         os.environ['IMAGE_ELEMENT'])
         self.runner.process_exclude_elements()
 
-        self.assertEqual(len(self.runner.elements), 3)
-        self.assertFalse('dep1' in self.runner.elements)
-        self.assertEqual(os.environ['IMAGE_ELEMENT'],
-                         'dep2 echo os')
+        self.assertEqual(3, len(self.runner.elements))
+        self.assertNotIn('dep1', self.runner.elements)
+        self.assertEqual('dep2 echo os', 
+                         os.environ['IMAGE_ELEMENT'])
 
     def test_process_path(self):
         cwd = os.path.dirname(__file__)
@@ -89,7 +89,7 @@ class TestRunner(testtools.TestCase):
         self.runner.loaded_elements = {}
         self.runner.process_path(test_elements)
 
-        self.assertEqual(len(self.runner.loaded_elements), 7)
+        self.assertEqual(7, len(self.runner.loaded_elements))
         self.assertIn('dep1', self.runner.loaded_elements)
         self.assertIn('dep2', self.runner.loaded_elements)
         self.assertIn('echo', self.runner.loaded_elements)
@@ -109,7 +109,7 @@ class TestRunner(testtools.TestCase):
 
         self.runner.run_hook('install')
 
-        self.assertEqual(mock_call.call_count, 1)
+        self.assertEqual(1, mock_call.call_count)
         self.assertEqual(
             ['dib-run-parts',
              os.path.join(self.runner.tmp_hook_dir, 'install.d')],
