@@ -1,0 +1,10 @@
+Code-Review+2: Emilien Macchi <emilien@redhat.com>
+Code-Review+1: Alex Schultz <aschultz@redhat.com>
+Code-Review+2: Steven Hardy <shardy@redhat.com>
+Workflow+1: Steven Hardy <shardy@redhat.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Wed, 18 Jan 2017 10:44:56 +0000
+Reviewed-on: https://review.openstack.org/420348
+Project: openstack/instack
+Branch: refs/heads/master
