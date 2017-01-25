@@ -175,7 +175,7 @@ def main(argv=sys.argv):
             em.run()
 
     except Exception as e:
-        LOG.error(e.message)
+        LOG.error(str(e))
         LOG.error(traceback.print_tb(sys.exc_info()[2]))
         sys.exit(1)
     finally:
