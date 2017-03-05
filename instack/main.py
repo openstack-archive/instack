@@ -91,8 +91,7 @@ def set_environment(tmp_dir):
     os.symlink('/', os.environ['TMP_MOUNT_PATH'])
     os.environ['DIB_OFFLINE'] = ''
     os.environ['DIB_INIT_SYSTEM'] = 'systemd'
-    os.environ['DIB_IMAGE_CACHE'] = (
-        '%s/.cache/image-create' % os.environ['HOME'])
+    os.environ['DIB_IMAGE_CACHE'] = '/tmp/.cache/image-create'
     os.environ['IMAGE_NAME'] = 'instack'
     os.environ['PATH'] = "%s:/usr/local/bin" % os.environ['PATH']
     os.environ.setdefault('DIB_DEFAULT_INSTALLTYPE', 'package')
