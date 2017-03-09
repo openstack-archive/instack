@@ -55,6 +55,9 @@ class ElementRunner(object):
         self.no_cleanup = no_cleanup
         self.loaded_elements = {}
         self.tmp_hook_dir = tempfile.mkdtemp()
+        self.environment_file = os.path.join(self.tmp_hook_dir,
+                                             'environment.d',
+                                             '00-dib-v2-env')
 
         # the environment variable should override anything passed in
         if 'ELEMENTS_PATH' in os.environ:
@@ -72,6 +75,14 @@ class ElementRunner(object):
         self.load_dependencies()
         self.process_exclude_elements()
         self.copy_elements()
+        self.generate_environment()
+
+    def generate_environment(self):
+        """Generate a dib v2 environment"""
+        command = ['element-info', '--env'] + list(self.elements)
+        env_output = subprocess.check_output(command)
+        with open(self.environment_file, 'w') as f:
+            f.write(env_output)
 
     def run(self):
         """Apply the elements by running each specified hook."""
