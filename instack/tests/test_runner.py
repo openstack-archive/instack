@@ -32,10 +32,17 @@ class TestRunner(testtools.TestCase):
         test_elements = os.path.join(cwd, 'elements')
         self.element_paths = [test_elements]
 
+        self.patcher = mock.patch.object(runner.ElementRunner,
+                                         'generate_environment')
+        self.mock_env = self.patcher.start()
         self.runner = runner.ElementRunner(['dep2', 'echo', 'os'], [],
                                            self.element_paths)
         tmp_dir = tempfile.mkdtemp()
         self.runner.tmp_hook_dir = tmp_dir
+
+    def tearDown(self):
+        super(TestRunner, self).tearDown()
+        self.patcher.stop()
 
     def test_cleanup(self):
         self.runner.cleanup()
