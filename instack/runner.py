@@ -79,6 +79,12 @@ class ElementRunner(object):
 
     def generate_environment(self):
         """Generate a dib v2 environment."""
+        # NOTE(bnemec): Older versions of dib don't need this.  We can tell
+        # by looking for the --env parameter to element-info.
+        check_output = subprocess.check_output(['element-info', '-h'])
+        if '--env' not in check_output:
+            return
+
         command = ['element-info', '--env'] + list(self.elements)
         env_output = subprocess.check_output(command)
         with open(self.environment_file, 'w') as f:
