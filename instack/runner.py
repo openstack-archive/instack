@@ -80,7 +80,16 @@ class ElementRunner(object):
     def generate_environment(self):
         """Generate a dib v2 environment."""
         command = ['element-info', '--env'] + list(self.elements)
-        env_output = subprocess.check_output(command)
+        try:
+            env_output = subprocess.check_output(command)
+        except CalledProcessError as e:
+            # NOTE(bnemec): Older versions of dib didn't need this step, so
+            # if it looks like we were running against one of those then make
+            # this a noop.
+            if 'error: unrecognized arguments: --env' in e.output:
+                env_output = ''
+            else:
+                raise
         with open(self.environment_file, 'w') as f:
             f.write(env_output)
 
