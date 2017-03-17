@@ -26,6 +26,18 @@ from diskimage_builder import element_dependencies
 
 from instack import element
 
+# dib-run-parts has moved in dibv2 to an internal call.  We don't
+# really want to introduce a dependency on dib-utils here.  For v1
+# just call it from path.
+# Note this is fragile as dib considers this internal
+_DIB_RUN_PARTS = 'dib-run-parts'
+try:
+    from diskimage_builder import paths
+    _DIB_RUN_PARTS = os.path.join(diskimage_builder.paths.get_path('lib'),
+                                  'dib-run-parts')
+except:
+    pass
+
 
 LOG = logging.getLogger()
 
@@ -179,7 +191,7 @@ class ElementRunner(object):
                 LOG.debug("    Blacklisting %s" % blacklisted_script)
                 os.unlink(os.path.join(hook_dir, blacklisted_script))
 
-        command = ['dib-run-parts', hook_dir]
+        command = [_DIB_RUN_PARTS, hook_dir]
         if self.dry_run:
             LOG.info("    Dry Run specified, not running hook")
         else:
