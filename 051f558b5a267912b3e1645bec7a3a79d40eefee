@@ -1,0 +1,9 @@
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+2: Michele Baldessari <michele@acksyn.org>
+Workflow+1: Ben Nemec <openstack@nemebean.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Sat, 25 Mar 2017 06:20:31 +0000
+Reviewed-on: https://review.openstack.org/447116
+Project: openstack/instack
+Branch: refs/heads/master
