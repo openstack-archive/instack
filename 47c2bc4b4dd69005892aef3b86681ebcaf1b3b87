@@ -1,0 +1,11 @@
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+1: Dmitry Tantsur <divius.inside@gmail.com>
+Code-Review+1: Gael Chamoulaud <gchamoul@redhat.com>
+Code-Review+2: Steven Hardy <shardy@redhat.com>
+Workflow+1: Steven Hardy <shardy@redhat.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 06 Apr 2017 12:44:02 +0000
+Reviewed-on: https://review.openstack.org/441706
+Project: openstack/instack
+Branch: refs/heads/master
