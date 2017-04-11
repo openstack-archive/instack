@@ -118,7 +118,7 @@ class TestRunner(testtools.TestCase):
 
         self.assertEqual(1, mock_call.call_count)
         self.assertEqual(
-            ['dib-run-parts',
+            [runner._DIB_RUN_PARTS,
              os.path.join(self.runner.tmp_hook_dir, 'install.d')],
             mock_call.call_args_list[0][0][0])
 
