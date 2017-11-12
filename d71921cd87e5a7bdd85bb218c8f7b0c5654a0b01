@@ -1,0 +1,11 @@
+Verified+1: Jenkins
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+1: Vu Cong Tuan <tuanvc@vn.fujitsu.com>
+Code-Review+1: Rajat Sharma <rajat.sharma@nectechnologies.in>
+Workflow+1: Alex Schultz <aschultz@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Sun, 12 Nov 2017 04:03:49 +0000
+Reviewed-on: https://review.openstack.org/503540
+Project: openstack/instack
+Branch: refs/heads/master
