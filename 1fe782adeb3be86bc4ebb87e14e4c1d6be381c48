@@ -1,0 +1,9 @@
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+2: Alex Schultz <aschultz@redhat.com>
+Workflow+1: Alex Schultz <aschultz@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Mon, 05 Feb 2018 21:28:51 +0000
+Reviewed-on: https://review.openstack.org/537491
+Project: openstack/instack
+Branch: refs/heads/stable/queens
