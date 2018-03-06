@@ -1,0 +1,9 @@
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+2: Alex Schultz <aschultz@redhat.com>
+Workflow+1: Alex Schultz <aschultz@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Tue, 06 Mar 2018 18:57:02 +0000
+Reviewed-on: https://review.openstack.org/534930
+Project: openstack/instack
+Branch: refs/heads/master
