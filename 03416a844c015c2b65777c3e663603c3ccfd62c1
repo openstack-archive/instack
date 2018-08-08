@@ -1,0 +1,9 @@
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Code-Review+2: Steve Baker <sbaker@redhat.com>
+Workflow+1: Steve Baker <sbaker@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Wed, 08 Aug 2018 21:17:24 +0000
+Reviewed-on: https://review.openstack.org/581333
+Project: openstack/instack
+Branch: refs/heads/master
