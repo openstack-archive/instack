@@ -1,0 +1,9 @@
+- project:
+    templates:
+      - openstack-python-jobs
+      - check-requirements
+    check:
+      jobs:
+        - openstack-tox-cover:
+            voting: false
+
