@@ -1,0 +1,10 @@
+Verified+1: RDO Third Party CI <dmsimard+rdothirdparty@redhat.com>
+Code-Review+2: Alex Schultz <aschultz@redhat.com>
+Code-Review+2: James Slagle <jslagle@redhat.com>
+Workflow+1: James Slagle <jslagle@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 07 Sep 2018 12:58:44 +0000
+Reviewed-on: https://review.openstack.org/572904
+Project: openstack/instack
+Branch: refs/heads/master
