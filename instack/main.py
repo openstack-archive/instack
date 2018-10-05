@@ -70,6 +70,10 @@ def load_args(argv):
         '--no-cleanup', action='store_true',
         help=("Do not cleanup tmp directories"))
     parser.add_argument(
+        '--tmp-folder', action='store', type=str,
+        default=os.path.join(os.path.expanduser('~'), '.instack/tmp'),
+        help=("Temporary folder prefix"))
+    parser.add_argument(
         '-l', '--logfile', action='store',
         default=os.path.join(os.path.expanduser('~'), '.instack/instack.log'),
         help=("Logfile to log all actions"))
@@ -131,7 +135,14 @@ def cleanup(tmp_dir):
 def main(argv=sys.argv):
     args = load_args(argv[1:])
 
-    tmp_dir = tempfile.mkdtemp(prefix='instack.')
+    try:
+        os.makedirs(args.tmp_folder)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
+
+    tmp_dir = tempfile.mkdtemp(prefix=os.path.join(args.tmp_folder,
+                                                   'instack.'))
     try:
         os.makedirs(os.path.dirname(args.logfile))
     except OSError as e:
@@ -164,13 +175,13 @@ def main(argv=sys.argv):
                 if "name" in run:
                     LOG.info("Running %s" % run["name"])
                 em = runner.ElementRunner(
-                    run['element'], run['hook'], args.element_path,
+                    run['element'], run['hook'], tmp_dir, args.element_path,
                     run.get('blacklist', []), run.get('exclude-element', []),
                     args.dry_run, args.interactive, args.no_cleanup)
                 em.run()
         else:
             em = runner.ElementRunner(
-                args.element, args.hook, args.element_path,
+                args.element, args.hook, tmp_dir, args.element_path,
                 args.blacklist, args.exclude_element,
                 args.dry_run, args.interactive,
                 args.no_cleanup)
