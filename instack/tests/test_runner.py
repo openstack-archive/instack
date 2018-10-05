@@ -36,7 +36,7 @@ class TestRunner(testtools.TestCase):
                                          'generate_environment')
         self.mock_env = self.patcher.start()
         self.runner = runner.ElementRunner(['dep2', 'echo', 'os'], [],
-                                           self.element_paths)
+                                           '/tmp', self.element_paths)
         tmp_dir = tempfile.mkdtemp()
         self.runner.tmp_hook_dir = tmp_dir
 
