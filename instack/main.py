@@ -70,6 +70,10 @@ def load_args(argv):
         '--no-cleanup', action='store_true',
         help=("Do not cleanup tmp directories"))
     parser.add_argument(
+        '--tmp-folder', action='store',
+        default=os.path.join(os.path.expanduser('~'), '.instack/tmp'),
+        help=("Temporary folder prefix"))
+    parser.add_argument(
         '-l', '--logfile', action='store',
         default=os.path.join(os.path.expanduser('~'), '.instack/instack.log'),
         help=("Logfile to log all actions"))
@@ -131,7 +135,13 @@ def cleanup(tmp_dir):
 def main(argv=sys.argv):
     args = load_args(argv[1:])
 
-    tmp_dir = tempfile.mkdtemp(prefix='instack.')
+    try:
+        os.makedirs(args.tmp_folder)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise       
+                   
+    tmp_dir = tempfile.mkdtemp(prefix=os.path.join(args.tmp_folder, 'instack.'))
     try:
         os.makedirs(os.path.dirname(args.logfile))
     except OSError as e:

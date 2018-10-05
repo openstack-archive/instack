@@ -66,7 +66,7 @@ class ElementRunner(object):
         self.interactive = interactive
         self.no_cleanup = no_cleanup
         self.loaded_elements = {}
-        self.tmp_hook_dir = tempfile.mkdtemp()
+        self.tmp_hook_dir = tempfile.mkdtemp(prefix=os.environ['TMP_MOUNT_PATH'])
         self.environment_file = os.path.join(self.tmp_hook_dir,
                                              'environment.d',
                                              '00-dib-v2-env')
@@ -192,10 +192,14 @@ class ElementRunner(object):
                      "exist at %s" % (hook, hook_dir))
             return
 
-        for blacklisted_script in self.blacklist:
-            if blacklisted_script in os.listdir(hook_dir):
-                LOG.debug("    Blacklisting %s" % blacklisted_script)
-                os.unlink(os.path.join(hook_dir, blacklisted_script))
+        for script in os.listdir(hook_dir):
+            script_fullpath = os.path.join(hook_dir, script)
+            if script in self.blacklist:
+                LOG.debug("    Blacklisting %s" % script)
+                os.unlink(script_fullpath)
+
+            if not os.access(script_fullpath, os.X_OK):
+                LOG.debug("Script %s not executable" % script)
 
         command = [_DIB_RUN_PARTS, hook_dir]
         if self.dry_run:
