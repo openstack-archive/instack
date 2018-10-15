@@ -1,0 +1,9 @@
+Verified+1: RDO Third Party CI <dmsimard+rdothirdparty@redhat.com>
+Code-Review+2: Alex Schultz <aschultz@redhat.com>
+Workflow+1: Emilien Macchi <emilien@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Mon, 15 Oct 2018 14:53:37 +0000
+Reviewed-on: https://review.openstack.org/608804
+Project: openstack/instack
+Branch: refs/heads/stable/pike
