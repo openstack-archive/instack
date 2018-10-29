@@ -1,1 +1,0 @@
-diskimage-builder git /tmp/diskimage-builder https://github.com/openstack/diskimage-builder.git
