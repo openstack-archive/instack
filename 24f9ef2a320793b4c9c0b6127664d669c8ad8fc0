@@ -1,0 +1,9 @@
+Verified-1: RDO Third Party CI <dmsimard+rdothirdparty@redhat.com>
+Code-Review+2: Emilien Macchi <emilien@redhat.com>
+Workflow+1: Juan Antonio Osorio Robles <jaosorior@redhat.com>
+Verified+2: Zuul
+Submitted-by: Zuul
+Submitted-at: Fri, 02 Nov 2018 05:56:15 +0000
+Reviewed-on: https://review.openstack.org/613980
+Project: openstack/instack
+Branch: refs/heads/master
